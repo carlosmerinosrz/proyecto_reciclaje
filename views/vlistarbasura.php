@@ -5,7 +5,7 @@
                 <span class="nombre"><?php echo $basura['nombre'] ?></span>
             </div>
             <div class="divBotones1" >
-                <a class="aEditar" href="index.php?controlador=cbasura&metodo=obtenerContenedorModf&id=<?php echo $basura['id_contenedor']; ?>">Editar</a>
+                <a class="aEditar" href="index.php?controlador=cbasura&metodo=mostrarFormModfBasura&id=<?php echo $basura['id_basura']; ?>">Editar</a>
                 <a class="aBorrar" href="index.php?controlador=cbasura&metodo=borrarbasura&id=<?php echo $basura['id_basura']; ?>">Borrar</a>
             </div>
         </div>

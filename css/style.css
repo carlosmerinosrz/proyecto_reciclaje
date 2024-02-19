@@ -140,6 +140,23 @@ form {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+}
+
+.modfBasuCont{
+  width: 100%;
+}
+
+.divDinamicoBasuras{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.btnBorradoBasuras{
+  margin: 10px;
+  width: 25%;
 }
 
 label {
@@ -177,9 +194,15 @@ h2 {
   max-height: 100px;
 }
 
+.imagenesInfContenedor{
+  width: 40%;
+  box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 3px -1px;
+  border-radius: 10px;
+}
+
 /* Estilos generales para el contenedor principal */
 .divContenedor {
-  background-color: #ffffff5d;
+  background-color: #ffffff;
   border: 1px solid #cccccc8e;
   text-align: center;
   box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.1);

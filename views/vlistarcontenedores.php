@@ -14,7 +14,7 @@
                     </div>
                 </div>
         <?php endforeach; ?>
-    </div>
 
-    <a href="index.php?controlador=ccontenedoresbasura&metodo=mostrarFormContenedores" class="volverAlJuego">ALTA DE CONTENEDORES</a> 
+        <a href="index.php?controlador=ccontenedoresbasura&metodo=mostrarFormContenedores"><img src="css/añadir.png" alt=""></a> 
+    </div>
 </div>

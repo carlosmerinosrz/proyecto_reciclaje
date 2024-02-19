@@ -3,9 +3,11 @@
     <!-- Campos del contenedor -->
     <label for="nombre">Nombre del Contenedor:</label>
     <input type="text" id="nombre" name="nombre" value="<?php echo $contenedor['nombre'] ?>">
-    
-    <label for="img">Subir Imagen:</label>
+
+    <div>Imagen Actual</div>
     <img src="data:image/jpeg;base64,<?php echo $contenedor['img'] ?>" alt="Imagen Actual">
+    <label for="img">Si deseas modificar la imagen, pulsa en Examinar: </label>
+    
     <input type="file" name="image" id="image" accept="image/*">
 
     <label for="descripcion">Descripción del Contenedor:</label>

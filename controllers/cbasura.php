@@ -26,10 +26,7 @@ class CBasura {
 
     public function crearBasura(){
         $this->vista = 'valtabasura';
-        
-        // Obtener datos de contenedores
-        
-    
+
         // Imprime o verifica los datos de contenedores
         echo $datos;
     
@@ -48,8 +45,6 @@ class CBasura {
         }
     }
     
-    
-
     public function sacarContenedores(){
         $datos = $this->objBasura->msacarcontenedores();
         return $datos;
@@ -75,6 +70,17 @@ class CBasura {
         }
     }
     
+    public function mostrarFormModfBasura(){
+        $this->vista = 'vmodifbasura';
+
+        $id_basura = $_GET['id'];
+
+        $datos = $this->objBasura->msacarBasura($id_basura);
+        return $datos;
+    }
     
+    public function modifBasura(){
+        
+    }
 }
 ?>

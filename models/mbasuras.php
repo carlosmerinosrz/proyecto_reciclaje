@@ -32,7 +32,6 @@ class MBasura extends Conexion{
         return $datos;
     }
     
-
     public function listadoBasura() {
         $sql = "SELECT * FROM basura";
         $conexion = $this->conexion->prepare($sql);
@@ -52,9 +51,28 @@ class MBasura extends Conexion{
         $sqlDelete = "DELETE FROM basura WHERE id_basura = ?";
         $conexion = $this->conexion->prepare($sqlDelete);
         $conexion->bind_param("i", $id_basura);
-        return $conexion->execute();
+        $resultado = $conexion->execute();
+        $conexion->close();
+    
+        return $resultado;
     }
+    
 
+    public function msacarBasura($id_basura) {
+        $sql = "SELECT * FROM basura WHERE id_basura = ?";
+        $conexion = $this->conexion->prepare($sql);
+        $conexion->bind_param("i", $id_basura);
+        $conexion->execute();
+        $datos = [];
+    
+        $result = $conexion->get_result();
+        while ($fila = $result->fetch_assoc()) {
+            $datos[] = $fila;
+        }
+        $conexion->close();
+    
+        return $datos;
+    }
     
 }
 ?>

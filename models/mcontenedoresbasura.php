@@ -11,7 +11,7 @@ class MContenedoresBasura extends Conexion{
         $base64Image = base64_encode($imageData);
         $nombre = ($nombre === '') ? NULL : $nombre;
         $descripcionContenedor = ($descripcionContenedor === '') ? NULL : $descripcionContenedor;
-        $imageData = ($imageData === '') ? NULL : $imageData;
+        $base64Image = ($base64Image === '') ? NULL : $base64Image;
         try {
             $sql = "INSERT INTO contenedores (nombre, img, descripcion) VALUES (?, ?, ?)";
             $conexion = $this->conexion->prepare($sql);
@@ -57,7 +57,7 @@ class MContenedoresBasura extends Conexion{
         $sqlSelect = "SELECT contenedores.id_contenedor, contenedores.nombre AS nombre_contenedor, contenedores.img AS imagen_contenedor,
             contenedores.descripcion AS descripcion_contenedor,
             basura.id_basura, basura.nombre AS nombre_basura, basura.descripcion AS descripcion_basura FROM contenedores
-            INNER JOIN basura ON contenedores.id_contenedor = basura.id_contenedor
+            LEFT JOIN basura ON contenedores.id_contenedor = basura.id_contenedor
             WHERE contenedores.id_contenedor = ?";
         $conexion2 = $this->conexion->prepare($sqlSelect);
         $conexion2->bind_param("i", $id);
@@ -88,26 +88,55 @@ class MContenedoresBasura extends Conexion{
     
     public function mmodifcontenedor($id, $nombre, $descripcion, $imageData){
         try{
-            $base64Image = base64_encode($imageData);
+            $base64Image = ($imageData !== null) ? base64_encode($imageData) : null;
             $nombre = ($nombre === '') ? NULL : $nombre;
             $descripcion = ($descripcion === '') ? NULL : $descripcion;
-            $base64Image = ($base64Image === '') ? NULL : $base64Image;
         
-            $sql = "UPDATE contenedores SET nombre = ?, img = ?, descripcion = ? WHERE id_contenedor = ?";
+            $sql = "UPDATE contenedores SET nombre = ?, descripcion = ?";
+            if($base64Image !== NULL){
+                $sql .= ", img = ?";
+            }
+            $sql .= " WHERE id_contenedor = ?";
             $conexion = $this->conexion->prepare($sql);
-            $conexion->bind_param("sssi", $nombre, $base64Image, $descripcion, $id);
-            // echo 'Consulta: ' . $sql . ' con valores: nombre=' . (($nombre === NULL) ? 'vacio' : $nombre) . ', descripcion=' . $descripcion . ', id_contenedor=' . $id;
-        
+    
+            if ($base64Image !== null) {
+                $conexion->bind_param("sssi", $nombre, $descripcion, $base64Image, $id);
+            } else {
+                $conexion->bind_param("ssi", $nombre, $descripcion, $id);
+            }
+            
+    
             if ($conexion->execute()){
                 $conexion->close();
                 return true;
             } else {
-                throw new Exception($consulta->error, $consulta->errno);
+                throw new Exception($conexion->error, $conexion->errno);
             }
         } catch (Exception $error) {
             $numeroError = $error->getCode();
             return $numeroError;
         }
-    }  
+    }
+
+    public function borrarBasurasContenedores($id){
+        $sql = "DELETE FROM basura WHERE id_contenedor = ?";
+        $conexion = $this->conexion->prepare($sql);
+        $conexion->bind_param("i", $id);
+        $resultado = $conexion->execute();
+        $conexion->close();
+        return $resultado;
+    }
+    
+    public function crearBasurasNuevas($nombreBasura, $descripcionBasura, $idContenedor) {
+        $descripcionBasura = ($descripcionBasura === '') ? NULL : $descripcionBasura;
+        $stmt = $this->conexion->prepare("INSERT INTO basura (nombre, descripcion, id_contenedor) VALUES (?, ?, ?)");
+        $stmt->bind_param('ssi', $nombreBasura, $descripcionBasura, $idContenedor);
+        $resultado = $stmt->execute();
+        $stmt->close();
+        return $resultado;
+    }
+    
+    
+    
 }
 ?>
