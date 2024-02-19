@@ -1,0 +1,430 @@
+@font-face {
+  font-family: "utendo";
+  src: url("Utendo-Bold.ttf") format("truetype");
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "utendo", sans-serif;
+  background-image: url("fondo.png");
+}
+
+nav {
+  padding: 5px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  z-index: 1;
+  background-color: white;
+}
+nav .logo {
+  display: flex;
+  align-items: center;
+}
+nav .logo img {
+  height: 25px;
+  width: auto;
+  margin-right: 10px;
+}
+nav .logo h1 {
+  font-size: 1.1rem;
+  color: rgb(0, 123, 27);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+nav ul li {
+  margin-left: 1.5rem;
+}
+nav ul li a {
+  text-decoration: none;
+  color: #000;
+  font-size: 95%;
+  font-weight: 400;
+  padding: 4px 8px;
+  border-radius: 5px;
+}
+
+nav ul li a:hover {
+  background-color: #f5f5f5;
+}
+.hamburger {
+  display: none;
+  cursor: pointer;
+  background-image: url("hamburguer.png");
+  background-size: cover;
+  width: 25px;
+  height: 25px;
+}
+
+.menubar {
+  position: absolute;
+  top: 0;
+  left: -60%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 60%;
+  height: 100vh;
+  padding: 20% 0;
+  background: rgba(255, 255, 255);
+  transition: all 0.5s ease-in;
+  z-index: 2;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+#contenedor h1 {
+  color: #00ae2b98;
+  font-family: utendo;
+  font-size: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  color: #333;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+
+#listarContenedores a {
+  text-align: center;
+  display: block;
+  margin: auto;
+}
+#infCont {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+  margin: 0;
+}
+
+form {
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+input[type="submit"] {
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #555;
+}
+
+h2 {
+  color: #333;
+  margin-top: 15px;
+}
+
+.imagenesContenedor {
+  width: auto;
+  border-radius: 10px;
+  max-height: 100px;
+}
+
+/* Estilos generales para el contenedor principal */
+.divContenedor {
+  background-color: #ffffff5d;
+  border: 1px solid #cccccc8e;
+  text-align: center;
+  box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.divBasuras {
+  width: 90%;
+  padding: 10px;
+  background-color: #ffffff5d;
+  border: 1px solid #cccccc8e;
+  text-align: center;
+  box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* Estilos para el nombre del contenedor */
+.divContenedor > div:nth-child(1) {
+  font-size: 26px;
+  padding: 10px;
+  font-weight: bold;
+}
+
+/* Estilos para la imagen del contenedor */
+.divContenedor > div:nth-child(2) img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+/* Estilos para la descripción del contenedor */
+.divContenedor > div:nth-child(3) {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+#columnasContenedores {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Crea 4 columnas de igual tamaño */
+  gap: 15px; /* Espacio entre las columnas */
+  padding: 15px; /* Ajusta según sea necesario */
+}
+
+.divBotones {
+  display: flex;
+  flex-grow: 2;
+  flex-shrink: 1;
+  margin: 5px;
+  padding: 10px;
+}
+.divBotones a {
+  flex-grow: 2;
+  flex-shrink: 1;
+}
+#aEditar {
+  background-color: rgb(83, 159, 83);
+}
+#aBorrar {
+  background-color: rgb(253, 133, 133);
+}
+
+.divImagenes{
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#informacionContenedor {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Crea 4 columnas de igual tamaño */
+  gap: 15px; /* Espacio entre las columnas */
+  padding: 50px; /* Ajusta según sea necesario */
+}
+
+#divBasurasInf {
+  height: 400px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.nombreContBasu {
+  padding: 15px;
+  font-family: "utendo";
+  font-weight: bold;
+  font-size: 25px;
+}
+
+#descripCont {
+  padding: 5px;
+}
+
+/* BORRADO */
+
+.alert-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.confirmation-buttons {
+  margin-top: 20px;
+}
+
+.button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.button-yes {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.button-no {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.error-message {
+  display: flex;
+  width: 40%;
+  height: 80px;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 0, 0, 0.476); /* Puedes cambiar el color de fondo según tus preferencias */
+  color: #fff; /* Puedes cambiar el color del texto según tus preferencias */
+  border-radius: 0px 0px 10px 10px;
+  box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
+  margin: auto;
+}
+.bueno-message {
+  display: flex;
+  width: 40%;
+  height: 80px;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(9, 139, 27, 0.476); /* Puedes cambiar el color de fondo según tus preferencias */
+  color: #fff; /* Puedes cambiar el color del texto según tus preferencias */
+  border-radius: 0px 0px 10px 10px;
+  box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
+  margin: auto;
+}
+#listarBasura {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.divBasura {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  padding: 15px;
+}
+
+.nombreContBasu {
+  display: flex;
+  align-items: center;
+}
+
+.idBasura {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.divBotones1 {
+  display: flex;
+  align-items: center;
+}
+
+.aEditar, .aBorrar {
+  display: inline-block;
+  text-decoration: none;
+  padding: 8px 12px;
+  border: 1px solid #3498db;
+  color: #3498db;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.aBorrar{
+  border: 1px solid rgb(187, 27, 27);
+  color: rgb(187, 27, 27);
+}
+
+.aEditar:hover {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.aBorrar:hover {
+  background-color: rgb(187, 27, 27);
+  color: #fff;
+}
+
+.volverAlJuego {
+  display: block;
+  margin-top: 20px;
+  text-decoration: none;
+  padding: 10px 15px;
+  background-color: #27ae60;
+  color: #fff;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.volverAlJuego1:hover {
+  background-color: #219d54;
+}
+
+
+
+@media screen and (max-width: 790px) {
+  .hamburger {
+    display: block;
+  }
+
+  .menu-active {
+    background-image: url("close.png");
+  }
+
+  nav ul {
+    display: none;
+  }
+
+  .active {
+    left: 0;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
+
+  #columnasContenedores {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Crea 4 columnas de igual tamaño */
+    gap: 15px; /* Espacio entre las columnas */
+    padding: 15px; /* Ajusta según sea necesario */
+  }
+  #informacionContenedor {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Crea 4 columnas de igual tamaño */
+    gap: 15px; /* Espacio entre las columnas */
+    padding: 50px; /* Ajusta según sea necesario */
+  }
+}
