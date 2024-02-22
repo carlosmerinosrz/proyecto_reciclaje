@@ -41,15 +41,15 @@ class CcontenedoresBasura {
 
         $dompdf = new Dompdf();
         $options = $dompdf->getOptions();
+        
         $options->set(array('isRemoteEnabled' => true));
         $dompdf->setOptions($options);
 
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'protrait');
-        $dompdf->render();
-        $dompdf->stream("listado_contenedores_carlos_merino.pdf");
+        $dompdf->loadHtml($html); //le pasamos el contenido del html que queremos pasar a pdf
+        $dompdf->setPaper('A4', 'protrait'); //Tamaño del papel y orientacion
+        $dompdf->render(); 
+        $dompdf->stream("listado_contenedores_carlos_merino.pdf"); //nombre del pdf
     }
-   
 
     public function procesarFormulario() {
         $this->vista = 'valtacontenedores';
@@ -68,7 +68,7 @@ class CcontenedoresBasura {
                 
                 $nombreBasuraArray = [];
                 $descripcionBasuraArray = [];
-                //Aquí voy a almacenar los nombres y la descripcion de las basuras que tiene cada contenedor
+                //Aquí voy a almacenar los nombres y la descripcion
         
                 for ($i = 1; $i <= 5; $i++) {
                     $nombreBasura = isset($_POST["nombreBasura$i"]) ? $_POST["nombreBasura$i"] : "";
@@ -151,6 +151,7 @@ class CcontenedoresBasura {
         $datosContenedor = $this->objContenedoresBasura->mObtenerContenedor($id);
         return $datosContenedor;
     }
+
     public function cmodificarcontenedor(){
         $nombre = $_POST["nombre"];
         $descripcion = $_POST["descripcion"];
@@ -158,7 +159,7 @@ class CcontenedoresBasura {
 
         $nombre = ($nombre === '') ? NULL : $nombre;
         $descripcion = ($descripcion === '') ? NULL : $descripcion;
-    
+
         // Verifica si se ha subido una img y si tiene contenido
         if (isset($_FILES["image"]["tmp_name"]) && !empty($_FILES["image"]["tmp_name"])) {
             $imageData = file_get_contents($_FILES["image"]["tmp_name"]);
@@ -201,13 +202,13 @@ class CcontenedoresBasura {
     public function borrarBasurasContenedores($id){
         return $this->objContenedoresBasura->borrarBasurasContenedores($id);
     }
-    
+
     public function crearBasurasNuevas() {
         $idContenedor = $_GET['id'];
-        
+
         $nuevasBasuras = array();
         $camposVacios = false;
-        
+
         //$_POST recorre todas las peticiones POST que se han hecho en el formulario
         foreach ($_POST as $devuelve => $nombre) {
             // strpos => comprueba si la cadena comienza por caracteres
@@ -220,13 +221,10 @@ class CcontenedoresBasura {
                 }
                 // Cogemos el id que esta despues de la cadena en este caso el id_basura
                 $idBasura = substr($devuelve, strlen('nombre_basura_'));
-    
                 // Construimos el nombre del campo de descripción correspondiente
                 $descripcionDevuelve = 'descripcion_basura_' . $idBasura . '_' . $idContenedor;
-                
                 // Verificamos si existe una descripción para esta basura
                 $descripcion = isset($_POST[$descripcionDevuelve]) ? $_POST[$descripcionDevuelve] : '';
-                
                 // Agregamos la nueva basura al array
                 $nuevasBasuras[] = array(
                     'nombre' => $nombre,
@@ -235,18 +233,15 @@ class CcontenedoresBasura {
                 );
             }
         }
-        
         // Si hay campos de nombre de basura en blanco, no hacemos ninguna operación
         if ($camposVacios) {
             $this->vista = 'vError';
             $this->mensaje = "Error no puede haber ningun Nombre en blanco, si deseas eliminar una basura pulsa la cruz";
             return;
         }
-        
         // Borramos las basuras existentes en el contenedor solo si no hay campos de nombre de basura en blanco
         $resultado = $this->borrarBasurasContenedores($idContenedor);
         
-        // Si el borrado fue exitoso, procedemos a crear las nuevas basuras
         if ($resultado === true) {
                 foreach ($nuevasBasuras as $basura) {
                     $nombre = $basura['nombre'];
