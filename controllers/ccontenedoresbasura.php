@@ -11,7 +11,7 @@ class CcontenedoresBasura {
     public function __construct() {
         require_once __DIR__ . '/../models/mcontenedoresbasura.php';
 
-        $this->vista = 'valtacontenedores';
+        $this->vista = 'vError';
         $this->objContenedoresBasura = new MContenedoresBasura();
     }
 

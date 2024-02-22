@@ -21,7 +21,7 @@ foreach ($datos as $basura):
         </div>
         <div id="divBasurasInf">
             <form class="modfBasuCont" action="index.php?controlador=ccontenedoresbasura&metodo=crearBasurasNuevas&id=<?php echo $basura['id_contenedor'] ?>" method="post">
-                <!-- Agrega el formulario para las basuras -->
+
 <?php
         $contenedorMostrado = true;
     endif;
@@ -41,13 +41,11 @@ foreach ($datos as $basura):
 <?php endforeach; ?>
             <button type="submit" class="enviarFormulario">Enviar Formulario</button>
         </form>
-
     </div>
 
     <script>
-    function borrarDiv(elemento) {
-        // Elimina el divDinamicoBasuras al que pertenece el botón de borrado
-        var divDinamico = elemento.parentNode;
-        divDinamico.parentNode.removeChild(divDinamico);
-    }
-</script>
+        function borrarDiv(elemento) {
+            var divDinamico = elemento.parentNode;
+            divDinamico.parentNode.removeChild(divDinamico);
+        }
+    </script>

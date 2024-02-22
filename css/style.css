@@ -146,7 +146,7 @@ input[type="submit"]:hover {
 }
 
 /* Estilo para enlaces de acción (Editar, Borrar, etc.) */
-.aBorrar, .aEditar {
+.aBorrar, .aEditar, .aModfBasura {
   display: inline-block;
   padding: 5px 10px;
   margin-right: 5px;
@@ -159,15 +159,34 @@ input[type="submit"]:hover {
 .aEditar {
   background-color: #5bc0de; /* Color azul */
 }
+.aModfBasura{
+  background-color: #deca5b;
+}
+
+#tablaContenedores_length{
+  display: none;
+}
 
 /* Estilo para la paginación */
 #paginacion {
   margin-top: 20px;
 }
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  padding : 10px;
+  margin-left: 0px;
+  display: inline;
+  cursor:pointer;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  color: #555;
+}
+.dataTables_paginate {
+  display: flex;
+  justify-content: end;
+}
 .paginate_button{
-  padding: 20px;
-  background-color: lightcyan;
-  cursor: pointer;
+  text-decoration: underline;
 }
 
 /* Estilo para la imagen de añadir */
@@ -185,7 +204,7 @@ input[type="submit"]:hover {
 }
 
 /* Estilo para el enlace Generar PDF */
-#listarContenedores a[target="_blank"] {
+.enlacesPdf, .enlacesAlta{
   display: inline-block;
   padding: 5px 10px;
   text-decoration: none;
@@ -193,6 +212,9 @@ input[type="submit"]:hover {
   background-color: #5cb85c; /* Color verde */
   border-radius: 3px;
   margin-bottom: 10px;
+}
+.enlacesPdf{
+  background-color: #5cb8af; /* Color verde */
 }
 
 /* --------------------------------------------------------------------------- */
@@ -214,41 +236,136 @@ input[type="submit"]:hover {
   cursor: pointer;
 }
 
-.button-yes {
-  background-color: #e74c3c;
+.button-yes, .button-no{
   color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.button-yes {
+  background-color: #5cb85c;
+
 }
 
 .button-no {
-  background-color: #3498db;
-  color: #fff;
+  background-color: #e74c3c;
+  
 }
 
 /* ------------------------------------------------------------------------------------------ */
+/* -------------------- MODIFICADO DE LAS BASURAS A TRAVES DE LOS CONTENEDORES----------------- */
+
+/* Estilo para el contenedor de información del contenedor y basuras */
+#informacionContenedor {
+  width: 80%;
+  margin: 20px auto;
+  background-color: #ffffffa9;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para la sección de información del contenedor */
+#infCont {
+  text-align: center;
+}
+
+#infCont img {
+  max-width: 100%;
+  max-height: 200px;
+  margin-bottom: 10px;
+}
+
+.nombreContBasu {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#descripCont {
+  margin-bottom: 20px;
+}
+
+/* Estilo para las basuras */
+.divDinamicoBasuras {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.divBasuras {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.divBasuras label, .divBasuras input {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Estilo para los botones de borrar basura */
+.btnBorradoBasuras button {
+  background-color: #d9534f; /* Color rojo */
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Estilo para el botón de enviar formulario */
+.enviarFormulario {
+  background-color: #5cb85c; /* Color verde */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* ------------------------------------------------------------------ */
+
+.error-message, .bueno-message{
+  margin: 20px;
+  display: flex;
+  width: 40%;
+  height: 80px;
+  justify-content: center;
+  align-items: center;
+  color: #fff; 
+  border-radius: 10px;
+  box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
+  padding: 10px;
+  text-align: center;
+}
 
 .error-message {
-  display: flex;
-  width: 40%;
-  height: 80px;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(255, 0, 0, 0.476); /* Puedes cambiar el color de fondo según tus preferencias */
-  color: #fff; /* Puedes cambiar el color del texto según tus preferencias */
-  border-radius: 0px 0px 10px 10px;
-  box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
-  margin: auto;
+  background-color: rgba(255, 0, 0, 0.476);
 }
 .bueno-message {
+  background-color: rgba(9, 139, 27, 0.476);
+}
+
+.volverAlListado{
+  margin: 20px;
+  background-color: #7f5cb8; /* Color verde */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+#contenedorNegro{
   display: flex;
-  width: 40%;
-  height: 80px;
-  justify-content: center;
   align-items: center;
-  background-color: rgba(9, 139, 27, 0.476); /* Puedes cambiar el color de fondo según tus preferencias */
-  color: #fff; /* Puedes cambiar el color del texto según tus preferencias */
-  border-radius: 0px 0px 10px 10px;
-  box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
-  margin: auto;
+  flex-direction: column;
 }
 
 @media screen and (max-width: 790px) {

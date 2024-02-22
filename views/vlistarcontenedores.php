@@ -1,6 +1,7 @@
 <div id="listarContenedores">
     <div id="columnasContenedores">
-        <a href="index.php?controlador=ccontenedoresbasura&metodo=generarPdf" target="_blank">Generar Pdf</a>
+        <a href="index.php?controlador=ccontenedoresbasura&metodo=generarPdf" target="_blank" class="enlacesPdf" >Generar Pdf</a>
+        <a href="index.php?controlador=ccontenedoresbasura&metodo=mostrarFormContenedores" class="enlacesAlta" >Alta Contenedor</a>
         <table id="tablaContenedores">
             <thead>
                 <tr>
@@ -21,7 +22,7 @@
                         <td>
                             <a class="aBorrar" href="index.php?controlador=ccontenedoresbasura&metodo=borrarContenedores&id=<?php echo $contenedor['id_contenedor']; ?>">Borrar</a>
                             <a class="aEditar" href="index.php?controlador=ccontenedoresbasura&metodo=obtenerContenedorModf&id=<?php echo $contenedor['id_contenedor']; ?>">Editar</a>
-                            <a class="aEditar" href="index.php?controlador=ccontenedoresbasura&metodo=mObtenerContenedorBasura&id=<?php echo $contenedor['id_contenedor']; ?>">Modf Basuras</a>
+                            <a class="aModfBasura" href="index.php?controlador=ccontenedoresbasura&metodo=mObtenerContenedorBasura&id=<?php echo $contenedor['id_contenedor']; ?>">Modf Basuras</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -30,9 +31,6 @@
 
         <div id="paginacion"></div>
 
-        <a href="index.php?controlador=ccontenedoresbasura&metodo=mostrarFormContenedores">
-            <img src="css/añadir.png" alt="">
-        </a>
     </div>
 </div>
 
@@ -42,6 +40,26 @@
 <script>
     $(document).ready(function () {
         $('#tablaContenedores').DataTable({
+            language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Contenedores",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
             "paging": true,
             "ordering": true,
             "info": true,

@@ -1,4 +1,7 @@
 <?php
+require_once 'librerias/dompdf/vendor/autoload.php';
+use Dompdf\Dompdf;
+
 class CBasura {
     public $vista;
     public $mensaje;
@@ -97,8 +100,25 @@ class CBasura {
         return $datos;
     }
     
-    public function modifBasura(){
-        
+    public function generarPdf() {
+        $datos = $this->objBasura->listadoBasura();
+        $this->generarVistaPdf($datos);
+    }
+    
+    public function generarVistaPdf($datos) {
+        ob_start();
+        include 'views/generarBasuraPdf.php';
+        $html = ob_get_clean();
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->set(array('isRemoteEnabled' => true));
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'protrait');
+        $dompdf->render();
+        $dompdf->stream("listado_basura_carlos_merino.pdf");
     }
 }
 ?>
