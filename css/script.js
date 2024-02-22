@@ -6,3 +6,4 @@ mobileNav.addEventListener("click", () => {
   mobileNav.classList.toggle("menu-active");
   console.log("esta activo")
 });
+

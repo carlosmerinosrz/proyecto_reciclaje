@@ -6,17 +6,17 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: "utendo", sans-serif;
+  font-family: "utendo";
   background-image: url("fondo.png");
 }
 
+/* ------------------------------MENU------------------------------ */
 nav {
   padding: 5px 5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-  z-index: 1;
   background-color: white;
 }
 nav .logo {
@@ -76,62 +76,8 @@ nav ul li a:hover {
   z-index: 2;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
-}
-
-#contenedor h1 {
-  color: #00ae2b98;
-  font-family: utendo;
-  font-size: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-header {
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  padding: 10px;
-}
-
-a {
-  display: block;
-  text-decoration: none;
-  color: #333;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-}
-
-
-#listarContenedores a {
-  text-align: center;
-  display: block;
-  margin: auto;
-}
-#infCont {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-h1 {
-  text-align: center;
-  margin-top: 20px;
-  margin: 0;
-}
-
+/* ------------------------------------------------------------------------------------------ */
+/* ------------------------------FORMULARIOS------------------------------ */
 form {
   max-width: 600px;
   margin: 20px auto;
@@ -142,39 +88,8 @@ form {
   overflow: auto;
 }
 
-.enviarFormulario{
-  background-color: #27ae60;
-  margin: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  color: white;
-  cursor: pointer;
-  float: inline-end;
-}
-
-.enviarFormulario:hover{
-  background-color: #249e56;
-}
-
 .modfBasuCont{
   width: 100%;
-}
-
-.divDinamicoBasuras{
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-}
-
-.btnBorradoBasuras{
-  margin: 10px;
-  width: 25%;
-}
-
-label {
-  display: block;
-  margin-top: 10px;
 }
 
 input,
@@ -196,144 +111,93 @@ input[type="submit"]:hover {
   background-color: #555;
 }
 
-h2 {
-  color: #333;
-  margin-top: 15px;
+/* ------------------------------------------------------------------------------------------ */
+
+/* -------------------------LISTADO DE CONTENEDORES------------------------- */
+/* Contenedor principal */
+#listarContenedores {
+  width: 80%;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilo para la tabla de contenedores */
+#tablaContenedores {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#tablaContenedores th, #tablaContenedores td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#tablaContenedores th {
+  background-color: #f2f2f2;
+}
+
+/* Estilo para las filas de la tabla */
+#tablaContenedores tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Estilo para enlaces de acción (Editar, Borrar, etc.) */
+.aBorrar, .aEditar {
+  display: inline-block;
+  padding: 5px 10px;
+  margin-right: 5px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #d9534f; /* Color rojo */
+  border-radius: 3px;
+}
+
+.aEditar {
+  background-color: #5bc0de; /* Color azul */
+}
+
+/* Estilo para la paginación */
+#paginacion {
+  margin-top: 20px;
+}
+.paginate_button{
+  padding: 20px;
+  background-color: lightcyan;
+  cursor: pointer;
+}
+
+/* Estilo para la imagen de añadir */
+#listarContenedores a img {
+  width: 50px;
+  height: 50px;
+  margin-top: 20px;
+  display: block;
+}
+
+/* Estilo para las imágenes de los contenedores */
 .imagenesContenedor {
-  width: auto;
-  border-radius: 10px;
+  max-width: 100px;
   max-height: 100px;
 }
 
-.imagenesInfContenedor{
-  width: 40%;
-  box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 3px -1px;
-  border-radius: 10px;
-}
-
-/* Estilos generales para el contenedor principal */
-.divContenedor {
-  background-color: #ffffff;
-  border: 1px solid #cccccc8e;
-  text-align: center;
-  box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-}
-
-.divBasuras {
-  width: 100%;
-  padding: 10px;
-  background-color: #ffffff5d;
-  border: 1px solid #cccccc8e;
-  text-align: center;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  margin-top: 10px;
-}
-
-.divBasuras input[type='text']{
-  font-size: 12px;
-  padding: 5px;
-  background-color: rgb(239, 239, 239);
-  border-radius: 5px;
-  margin: 0px;
-}
-
-.borrarBasura{
-  background-color: tomato;
-  padding: 10px;
-  border-radius: 10px;
-  color: white;
-  cursor: pointer;
-  margin-left: 30px;
-}
-
-.borrarBasura:hover{
-  background-color: rgb(223, 85, 61);
-}
-
-/* Estilos para el nombre del contenedor */
-.divContenedor > div:nth-child(1) {
-  font-size: 26px;
-  padding: 10px;
-  font-weight: bold;
-}
-
-/* Estilos para la imagen del contenedor */
-.divContenedor > div:nth-child(2) img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
+/* Estilo para el enlace Generar PDF */
+#listarContenedores a[target="_blank"] {
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #5cb85c; /* Color verde */
+  border-radius: 3px;
   margin-bottom: 10px;
 }
 
-/* Estilos para la descripción del contenedor */
-.divContenedor > div:nth-child(3) {
-  font-size: 14px;
-  margin-bottom: 10px;
-}
+/* --------------------------------------------------------------------------- */
 
-#columnasContenedores {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Crea 4 columnas de igual tamaño */
-  gap: 15px; /* Espacio entre las columnas */
-  padding: 15px; /* Ajusta según sea necesario */
-}
-
-.divBotones {
-  display: flex;
-  flex-grow: 2;
-  flex-shrink: 1;
-  margin: 5px;
-  padding: 10px;
-}
-.divBotones a {
-  flex-grow: 2;
-  flex-shrink: 1;
-}
-#aEditar {
-  background-color: rgb(83, 159, 83);
-}
-#aBorrar {
-  background-color: rgb(253, 133, 133);
-}
-
-.divImagenes{
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#informacionContenedor {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Crea 4 columnas de igual tamaño */
-  gap: 15px; /* Espacio entre las columnas */
-  padding: 50px; /* Ajusta según sea necesario */
-}
-
-#divBasurasInf {
-  height: 600px;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.nombreContBasu {
-  padding: 15px;
-  font-family: "utendo";
-  font-weight: bold;
-  font-size: 25px;
-}
-
-#descripCont {
-  padding: 5px;
-}
-
-/* BORRADO */
+/* ------------------------------ CONFIRMACION DE BORRADO ------------------------------*/
 
 .alert-container {
   padding: 20px;
@@ -360,6 +224,8 @@ h2 {
   color: #fff;
 }
 
+/* ------------------------------------------------------------------------------------------ */
+
 .error-message {
   display: flex;
   width: 40%;
@@ -384,77 +250,6 @@ h2 {
   box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
   margin: auto;
 }
-#listarBasura {
-  width: 80%;
-  margin: 20px auto;
-}
-
-.divBasura {
-  display: flex;
-  justify-content: space-between;
-  background-color: #f4f4f4;
-  border: 1px solid #ddd;
-  margin: 10px 0;
-  padding: 15px;
-}
-
-.nombreContBasu {
-  display: flex;
-  align-items: center;
-}
-
-.idBasura {
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-.divBotones1 {
-  display: flex;
-  align-items: center;
-}
-
-.aEditar, .aBorrar {
-  display: inline-block;
-  text-decoration: none;
-  padding: 8px 12px;
-  border: 1px solid #3498db;
-  color: #3498db;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
-
-.aBorrar{
-  border: 1px solid rgb(187, 27, 27);
-  color: rgb(187, 27, 27);
-}
-
-.aEditar:hover {
-  background-color: #3498db;
-  color: #fff;
-}
-
-.aBorrar:hover {
-  background-color: rgb(187, 27, 27);
-  color: #fff;
-}
-
-.volverAlJuego {
-  display: block;
-  margin-top: 20px;
-  text-decoration: none;
-  padding: 10px 15px;
-  background-color: #27ae60;
-  color: #fff;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
-
-.volverAlJuego1:hover {
-  background-color: #219d54;
-}
-
-
-
 
 @media screen and (max-width: 790px) {
   .hamburger {
@@ -472,18 +267,5 @@ h2 {
   .active {
     left: 0;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  }
-
-  #columnasContenedores {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Crea 4 columnas de igual tamaño */
-    gap: 15px; /* Espacio entre las columnas */
-    padding: 15px; /* Ajusta según sea necesario */
-  }
-  #informacionContenedor {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr); /* Crea 4 columnas de igual tamaño */
-    gap: 15px; /* Espacio entre las columnas */
-    padding: 50px; /* Ajusta según sea necesario */
   }
 }
