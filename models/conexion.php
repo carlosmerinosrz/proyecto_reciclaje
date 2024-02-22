@@ -13,6 +13,10 @@ class Conexion {
         }
     
         $this->conexion->set_charset("utf8");
+
+        // Activar el modo estricto en esta conexión
+        $this->conexion->query("SET SESSION sql_mode = 'STRICT_ALL_TABLES'");
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     }
 }
 

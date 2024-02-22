@@ -26,9 +26,9 @@ class MContenedoresBasura extends Conexion{
 
     public function agregarBasura($idContenedor, $nombreBasura, $descripcionBasura) {
         $descripcionBasura = ($descripcionBasura === '') ? NULL : $descripcionBasura;
-        $stmt = $this->conexion->prepare("INSERT INTO basura (nombre, descripcion, id_contenedor) VALUES (?, ?, ?)");
-        $stmt->bind_param('ssi', $nombreBasura, $descripcionBasura, $idContenedor);
-        $stmt->execute();
+        $consulta = $this->conexion->prepare("INSERT INTO basura (nombre, descripcion, id_contenedor) VALUES (?, ?, ?)");
+        $consulta->bind_param('ssi', $nombreBasura, $descripcionBasura, $idContenedor);
+        $consulta->execute();
     }
     
     public function listarContenedores() {
@@ -87,12 +87,10 @@ class MContenedoresBasura extends Conexion{
     }
     
     public function mmodifcontenedor($id, $nombre, $descripcion, $imageData){
-        try{
-            $base64Image = ($imageData !== null) ? base64_encode($imageData) : null;
-            $nombre = ($nombre === '') ? NULL : $nombre;
-            $descripcion = ($descripcion === '') ? NULL : $descripcion;
-        
+        try {
+            $base64Image = ($imageData !== NULL) ? base64_encode($imageData) : NULL;
             $sql = "UPDATE contenedores SET nombre = ?, descripcion = ?";
+     
             if($base64Image !== NULL){
                 $sql .= ", img = ?";
             }
@@ -105,7 +103,6 @@ class MContenedoresBasura extends Conexion{
                 $conexion->bind_param("ssi", $nombre, $descripcion, $id);
             }
             
-    
             if ($conexion->execute()){
                 $conexion->close();
                 return true;
@@ -117,7 +114,8 @@ class MContenedoresBasura extends Conexion{
             return $numeroError;
         }
     }
-
+    
+    
     public function borrarBasurasContenedores($id){
         $sql = "DELETE FROM basura WHERE id_contenedor = ?";
         $conexion = $this->conexion->prepare($sql);
@@ -128,11 +126,10 @@ class MContenedoresBasura extends Conexion{
     }
     
     public function crearBasurasNuevas($nombreBasura, $descripcionBasura, $idContenedor) {
-        $descripcionBasura = ($descripcionBasura === '') ? NULL : $descripcionBasura;
-        $stmt = $this->conexion->prepare("INSERT INTO basura (nombre, descripcion, id_contenedor) VALUES (?, ?, ?)");
-        $stmt->bind_param('ssi', $nombreBasura, $descripcionBasura, $idContenedor);
-        $resultado = $stmt->execute();
-        $stmt->close();
+        $consulta = $this->conexion->prepare("INSERT INTO basura (nombre, descripcion, id_contenedor) VALUES (?, ?, ?)");
+        $consulta->bind_param('ssi', $nombreBasura, $descripcionBasura, $idContenedor);
+        $resultado = $consulta->execute();
+        $consulta->close();
         return $resultado;
     }
     

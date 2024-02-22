@@ -1,4 +1,7 @@
 <?php
+require_once 'librerias/dompdf/vendor/autoload.php';
+use Dompdf\Dompdf;
+
 class CcontenedoresBasura {
     public $vista;
     public $mensaje;
@@ -25,6 +28,28 @@ class CcontenedoresBasura {
     public function mostrarFormContenedores(){
         $this->vista = 'valtacontenedores';
     }
+
+    public function generarPdf() {
+        $datos = $this->objContenedoresBasura->listarContenedores();
+        $this->generarVistaPdf($datos);
+    }
+    
+    public function generarVistaPdf($datos) {
+        ob_start();
+        include 'views/generarPdf.php';
+        $html = ob_get_clean();
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->set(array('isRemoteEnabled' => true));
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'protrait');
+        $dompdf->render();
+        $dompdf->stream("listado_contenedores_carlos_merino.pdf");
+    }
+   
 
     public function procesarFormulario() {
         $this->vista = 'valtacontenedores';
@@ -95,11 +120,6 @@ class CcontenedoresBasura {
             }
         }
     }
-
-    public function obtenerMensajeError($numeroError) {
-        // Puedes personalizar este método según tus necesidades
-        $this->mensaje = "Error al crear el contenedor. Código de error: " . $numeroError;
-    }
     
     public function borrarContenedores(){
         $id = $_GET['id'];
@@ -123,12 +143,6 @@ class CcontenedoresBasura {
         
         return $datosContenedor;
     }
-    
-    public function mostrarErrorDeModificacion() {
-        $this->view = 'vError'; 
-        $mensajeError = $this->mensaje; 
-        return $mensajeError;
-    }
 
     public function obtenerContenedorModf(){
         $this->vista = 'vmodificarcontenedor';
@@ -141,26 +155,49 @@ class CcontenedoresBasura {
         $nombre = $_POST["nombre"];
         $descripcion = $_POST["descripcion"];
         $id = $_GET['id'];
+
+        $nombre = ($nombre === '') ? NULL : $nombre;
+        $descripcion = ($descripcion === '') ? NULL : $descripcion;
     
-        // Verifica si se ha subido un archivo y si tiene contenido
+        // Verifica si se ha subido una img y si tiene contenido
         if (isset($_FILES["image"]["tmp_name"]) && !empty($_FILES["image"]["tmp_name"])) {
             $imageData = file_get_contents($_FILES["image"]["tmp_name"]);
         } else {
-            // Si no se subió un archivo, asigna NULL a $imageData
-            $imageData = null;
+            $imageData = NULL;
         }
     
         $resultado = $this->objContenedoresBasura->mmodifcontenedor($id, $nombre, $descripcion, $imageData);
         
         if ($resultado === true) {
-            header("Location: index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores");
-            exit();
+             header("Location: index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores");
+             exit();
         } else {
             $this->mensaje = $this->obtenerMensajeError($resultado);
-            $this->mostrarErrorDeModificacion();
         }
     }
     
+    public function obtenerMensajeError($codigoError) {
+        $this->vista = 'vError'; 
+        $this->mensaje = "Error. Código de error: " . $codigoError;
+
+        switch ($codigoError) {
+            case 1048:
+                $this->mensaje = "Error al procesar el formulario: No puede haber campos vacíos.";
+                break;
+            case 1406:
+                $this->mensaje = "Error al procesar el formulario: Los campos exceden la longitud máxima.";
+                break;
+            default:
+                if (is_numeric($codigoError)) {
+                    $this->mensaje = "Error al crear contenedor. Código de error: $codigoError";
+                } else {
+                    $this->mensaje = $codigoError;
+                }
+                break;
+        }
+        return $this->mensaje;
+    }
+
     public function borrarBasurasContenedores($id){
         return $this->objContenedoresBasura->borrarBasurasContenedores($id);
     }
@@ -169,43 +206,59 @@ class CcontenedoresBasura {
         $idContenedor = $_GET['id'];
         
         $nuevasBasuras = array();
+        $camposVacios = false;
         
-        // Recorremos $_POST para extraer las nuevas basuras
-        foreach ($_POST as $key => $value) {
+        //$_POST recorre todas las peticiones POST que se han hecho en el formulario
+        foreach ($_POST as $devuelve => $nombre) {
+            // strpos => comprueba si la cadena comienza por caracteres
             // Verificamos si el nombre del campo comienza con "nombre_basura_" para identificar los campos de nombre de basura
-            if (strpos($key, 'nombre_basura_') === 0) {
-                // Obtenemos el ID de la basura del nombre del campo
-                $idBasura = substr($key, strlen('nombre_basura_'));
-
-                
+            if (strpos($devuelve, 'nombre_basura_') === 0/**si esta cadena esta en la posicion 0 */) {
+                // Verificar si el nombre está en blanco
+                if (empty($nombre)) {
+                    $camposVacios = true;
+                    break;
+                }
+                // Cogemos el id que esta despues de la cadena en este caso el id_basura
+                $idBasura = substr($devuelve, strlen('nombre_basura_'));
+    
                 // Construimos el nombre del campo de descripción correspondiente
-                $descripcionKey = 'descripcion_basura_' . $idBasura . '_' . $idContenedor;
+                $descripcionDevuelve = 'descripcion_basura_' . $idBasura . '_' . $idContenedor;
                 
                 // Verificamos si existe una descripción para esta basura
-                $descripcion = isset($_POST[$descripcionKey]) ? $_POST[$descripcionKey] : '';
+                $descripcion = isset($_POST[$descripcionDevuelve]) ? $_POST[$descripcionDevuelve] : '';
                 
                 // Agregamos la nueva basura al array
                 $nuevasBasuras[] = array(
-                    'nombre' => $value,
+                    'nombre' => $nombre,
                     'descripcion' => $descripcion,
                     'id_contenedor' => $idContenedor
                 );
             }
         }
         
-        // Borramos las basuras existentes en el contenedor
+        // Si hay campos de nombre de basura en blanco, no hacemos ninguna operación
+        if ($camposVacios) {
+            $this->vista = 'vError';
+            $this->mensaje = "Error no puede haber ningun Nombre en blanco, si deseas eliminar una basura pulsa la cruz";
+            return;
+        }
+        
+        // Borramos las basuras existentes en el contenedor solo si no hay campos de nombre de basura en blanco
         $resultado = $this->borrarBasurasContenedores($idContenedor);
         
         // Si el borrado fue exitoso, procedemos a crear las nuevas basuras
         if ($resultado === true) {
-            foreach ($nuevasBasuras as $basura) {
-                $nombre = $basura['nombre'];
-                $descripcion = $basura['descripcion'];
-                $idContenedor = $basura['id_contenedor'];
-                $this->objContenedoresBasura->crearBasurasNuevas($nombre, $descripcion, $idContenedor);
+                foreach ($nuevasBasuras as $basura) {
+                    $nombre = $basura['nombre'];
+                    $descripcion = $basura['descripcion'];
+                    $idContenedor = $basura['id_contenedor'];
+                    $nombre = ($nombre === '') ? NULL : $nombre;
+                    $descripcion = ($descripcion === '') ? NULL : $descripcion;
+                    $this->objContenedoresBasura->crearBasurasNuevas($nombre, $descripcion, $idContenedor);
+                }
+                $this->mensajebueno = "Se ha creado correctamente el contenedor con sus basuras";
+                return;
             }
         }
     }
-    
-}
 ?>

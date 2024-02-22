@@ -1,6 +1,7 @@
 <?php
     require_once 'config/configdb.php';
 
+
     if(!isset($_GET["controlador"])) $_GET["controlador"] = constant("CONTROLADOR_DEFECTO");
     if(!isset($_GET["metodo"])) $_GET["metodo"] = constant("METODO_DEFECTO");
 

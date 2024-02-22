@@ -26,23 +26,45 @@ class CBasura {
 
     public function crearBasura(){
         $this->vista = 'valtabasura';
-
-        // Imprime o verifica los datos de contenedores
-        echo $datos;
     
         $nombre = $_POST['nombre'];
         $descripcion = $_POST['descripcion'];
         $id_contenedor = $_POST['id_contenedor'];
+
+        $nombre = ($nombre === '') ? NULL : $nombre;
+        $descripcion = ($descripcion === '') ? NULL : $descripcion;
     
-        $resultado = $this->objBasura->agregarBasura($nombre, $descripcion, $id_contenedor);
-    
-        if($resultado === true){
-            header("Location: index.php?controlador=cbasura&metodo=listadobasura");
-            exit();
-        } else {
-            // Renderizar la vista con los datos de contenedores
-            include 'ruta_a_tu_vista.php';
+            $resultado = $this->objBasura->agregarBasura($nombre, $descripcion, $id_contenedor);
+        
+            if($resultado === true){
+                 header("Location: index.php?controlador=cbasura&metodo=listadobasura");
+                 exit();
+            }else{
+                $this->obtenerMensajeError($resultado);
+            }
+        
+    }
+
+    public function obtenerMensajeError($codigoError) {
+        $this->vista = 'vError'; 
+        $this->mensaje = "Error. Código de error: " . $codigoError;
+
+        switch ($codigoError) {
+            case 1048:
+                $this->mensaje = "Error al procesar el formulario: No puede haber campos vacíos.";
+                break;
+            case 1406:
+                $this->mensaje = "Error al procesar el formulario: Los campos exceden la longitud máxima.";
+                break;
+            default:
+                if (is_numeric($codigoError)) {
+                    $this->mensaje = "Error al crear contenedor. Código de error: $codigoError";
+                } else {
+                    $this->mensaje = $codigoError;
+                }
+                break;
         }
+        return $this->mensaje;
     }
     
     public function sacarContenedores(){
@@ -50,10 +72,6 @@ class CBasura {
         return $datos;
     }
 
-    public function obtenerMensajeError($numeroError) {
-        // Puedes personalizar este método según tus necesidades
-        $this->mensaje = "Error al crear la basura. Código de error: " . $numeroError;
-    }
     
     public function borrarbasura(){
         $id = $_GET['id'];

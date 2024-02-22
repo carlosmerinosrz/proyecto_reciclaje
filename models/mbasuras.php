@@ -8,12 +8,18 @@ class MBasura extends Conexion{
     }
 
     public function agregarBasura($nombreBasura, $descripcionBasura,$id_contenedor) {
-        $nombreBasura = ($nombreBasura === '') ? NULL : $nombreBasura;
-        $descripcionBasura = ($descripcionBasura === '') ? NULL : $descripcionBasura;
-        $stmt = $this->conexion->prepare("INSERT INTO basura (nombre, descripcion, id_contenedor) VALUES (?, ?, ?)");
-        $stmt->bind_param('ssi', $nombreBasura, $descripcionBasura, $id_contenedor);
-        if($stmt->execute()){
-            return true;
+        try {
+            $conexion = $this->conexion->prepare("INSERT INTO basura (nombre, descripcion, id_contenedor) VALUES (?, ?, ?)");
+            $conexion->bind_param('ssi', $nombreBasura, $descripcionBasura, $id_contenedor);
+            if ($conexion->execute()){
+                $conexion->close();
+                return true;
+            } else {
+                throw new Exception($conexion->error, $conexion->errno);
+            }
+        } catch (Exception $error) {
+            $numeroError = $error->getCode();
+            return $numeroError;
         }
     }
     
