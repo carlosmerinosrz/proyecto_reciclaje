@@ -133,7 +133,22 @@ class MContenedoresBasura extends Conexion{
         return $resultado;
     }
     
-    
+    public function crearContenedorSinBasura($nombre, $imageData, $descripcionContenedor) {
+        $base64Image = base64_encode($imageData);
+        try {
+            $sql = "INSERT INTO contenedores (nombre, img, descripcion) VALUES (?, ?, ?)";
+            $conexion = $this->conexion->prepare($sql);
+            $conexion->bind_param("sss", $nombre, $base64Image, $descripcionContenedor);
+        
+            if ($conexion->execute()) {
+                return $this->conexion->insert_id;
+            } else {
+                echo "Error en la inserción: " . $conexion->error;
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
     
 }
 ?>

@@ -236,7 +236,7 @@ form img {
 }
 
 /* Estilo para el enlace Generar PDF */
-.enlacesPdf, .enlacesAlta{
+.enlacesPdf, .enlacesAlta, .enlacesCsv{
   display: inline-block;
   padding: 5px 10px;
   text-decoration: none;
@@ -247,6 +247,9 @@ form img {
 }
 .enlacesPdf{
   background-color: #5cb8af; /* Color verde */
+}
+.enlacesCsv{
+  background-color: #b87c5c; /* Color verde */
 }
 
 /* --------------------------------------------------------------------------- */

@@ -2,6 +2,7 @@
     <div id="columnasContenedores">
         <a href="index.php?controlador=cbasura&metodo=generarPdf" target="_blank" class="enlacesPdf">Generar Pdf</a>
         <a href="index.php?controlador=cbasura&metodo=mostrarFormBasura" class="enlacesAlta">Alta de Basuras</a> 
+        
         <table id="tablaContenedores">
             <thead>
                 <tr>

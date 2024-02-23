@@ -33,6 +33,18 @@
 
     </div>
 </div>
+<form action="index.php?controlador=ccontenedoresbasura&metodo=insertarCSV" method="POST" enctype="multipart/form-data"/>
+            <div class="file-input text-center">
+                <input  type="file" name="dataCliente" id="file-input" class="file-input__input" accept=".csv"/>
+                <label class="file-input__label" for="file-input">
+                <i class="zmdi zmdi-upload zmdi-hc-2x"></i>
+                <span>Elegir Archivo CSV</span></label
+                >
+            </div>
+            <div class="text-center mt-5">
+                <input type="submit" name="subir" class="btn-enviar" value="Subir Archivo CSV"/>
+            </div>
+        </form>
 
 <!-- Agrega las bibliotecas de jQuery y DataTables -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

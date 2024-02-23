@@ -11,6 +11,9 @@ class MBasura extends Conexion{
         try {
             $conexion = $this->conexion->prepare("INSERT INTO basura (nombre, descripcion, id_contenedor) VALUES (?, ?, ?)");
             $conexion->bind_param('ssi', $nombreBasura, $descripcionBasura, $id_contenedor);
+
+            print_r($nombreBasura);
+            print_r($id_contenedor);
             if ($conexion->execute()){
                 $conexion->close();
                 return true;
