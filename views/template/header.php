@@ -8,7 +8,7 @@
     <body>
         <nav>
             <div class="logo">
-                <img src="css/icon_reciclaje.png">
+                <img src="image/icon_reciclaje.png">
                 <h1>RECICLA TU BASURA</h1>
             </div>
             <ul>

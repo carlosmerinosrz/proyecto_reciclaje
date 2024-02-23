@@ -9,9 +9,6 @@ class MContenedoresBasura extends Conexion{
 
     public function crearContenedorBasura($nombre, $imageData, $descripcionContenedor) {
         $base64Image = base64_encode($imageData);
-        $nombre = ($nombre === '') ? NULL : $nombre;
-        $descripcionContenedor = ($descripcionContenedor === '') ? NULL : $descripcionContenedor;
-        $base64Image = ($base64Image === '') ? NULL : $base64Image;
         try {
             $sql = "INSERT INTO contenedores (nombre, img, descripcion) VALUES (?, ?, ?)";
             $conexion = $this->conexion->prepare($sql);
@@ -126,7 +123,8 @@ class MContenedoresBasura extends Conexion{
     }
     
     public function crearBasurasNuevas($nombreBasura, $descripcionBasura, $idContenedor) {
-        $consulta = $this->conexion->prepare("INSERT INTO basura (nombre, descripcion, id_contenedor) VALUES (?, ?, ?)");
+        $sql = "INSERT INTO basura (nombre, descripcion, id_contenedor) VALUES (?, ?, ?)";
+        $conexion = $this->conexion->prepare($sql);
         $consulta->bind_param('ssi', $nombreBasura, $descripcionBasura, $idContenedor);
         $resultado = $consulta->execute();
         $consulta->close();
@@ -140,13 +138,15 @@ class MContenedoresBasura extends Conexion{
             $conexion = $this->conexion->prepare($sql);
             $conexion->bind_param("sss", $nombre, $base64Image, $descripcionContenedor);
         
-            if ($conexion->execute()) {
-                return $this->conexion->insert_id;
+            if($conexion->execute()){
+                $conexion->close();
+                return true;
             } else {
-                echo "Error en la inserción: " . $conexion->error;
+                throw new Exception($conexion->error, $conexion->errno);
             }
-        } catch (Exception $e) {
-            throw $e;
+        } catch (Exception $error) {
+            $numeroError = $error->getCode();
+            return $numeroError;
         }
     }
     

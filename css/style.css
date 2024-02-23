@@ -7,7 +7,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: "utendo";
-  background-image: url("fondo.png");
+  background-image: url("../image/fondo.png");
 }
 
 /* ------------------------------MENU------------------------------ */
@@ -55,7 +55,7 @@ nav ul li a:hover {
 .hamburger {
   display: none;
   cursor: pointer;
-  background-image: url("hamburguer.png");
+  background-image: url("../image/hamburguer.png");
   background-size: cover;
   width: 25px;
   height: 25px;
@@ -409,7 +409,7 @@ form img {
   }
 
   .menu-active {
-    background-image: url("close.png");
+    background-image: url("../image/close.png");
   }
 
   nav ul {

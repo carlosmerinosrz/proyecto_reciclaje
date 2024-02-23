@@ -64,7 +64,10 @@ class CcontenedoresBasura {
                     }
 
                     $nombre = $_POST["nombre"];
+                    $nombre = ($nombre === '') ? NULL : $nombre;
+                    
                     $descripcionContenedor = $_POST["descripcionContenedor"];
+                    $descripcionContenedor = ($descripcionContenedor === '') ? NULL : $descripcionContenedor;
                     
                     $nombreBasuraArray = [];
                     $descripcionBasuraArray = [];
@@ -122,17 +125,20 @@ class CcontenedoresBasura {
         }
         
         public function borrarContenedores(){
-            $id = $_GET['id'];
             $this->vista = 'vborrado';
-        
-            if (isset($_POST['confirmacion'])) {
-                $respuesta = $_POST['confirmacion'];
-        
-                if ($respuesta === 'si') {
-                    $resultado = $this->objContenedoresBasura->mBorrarContenedor($id);
+
+            $id = $_GET['id'];
+            
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (isset($_POST['confirmacion'])) {
+                    $respuesta = $_POST['confirmacion'];
+            
+                    if ($respuesta === 'si') {
+                        $resultado = $this->objContenedoresBasura->mBorrarContenedor($id);
+                    }
+                    header("Location: index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores");
+                    exit();
                 }
-                header("Location: index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores");
-                exit();
             }
         }
 
@@ -140,40 +146,43 @@ class CcontenedoresBasura {
             $this->vista = 'informacioncontenedores';
             $id = $_GET['id'];
             $datosContenedor = $this->objContenedoresBasura->mObtenerContenedorBasura($id);
-            
             return $datosContenedor;
         }
 
         public function obtenerContenedorModf(){
             $this->vista = 'vmodificarcontenedor';
-
             $id = $_GET['id'];
             $datosContenedor = $this->objContenedoresBasura->mObtenerContenedor($id);
             return $datosContenedor;
         }
 
         public function cmodificarcontenedor(){
-            $nombre = $_POST["nombre"];
-            $descripcion = $_POST["descripcion"];
-            $id = $_GET['id'];
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if(isset($_POST["nombre"]) && isset($_POST["descripcion"])){
 
-            $nombre = ($nombre === '') ? NULL : $nombre;
-            $descripcion = ($descripcion === '') ? NULL : $descripcion;
+                    $nombre = $_POST["nombre"];
+                    $descripcion = $_POST["descripcion"];
+                    $id = $_GET['id'];
 
-            // Verifica si se ha subido una img y si tiene contenido
-            if (isset($_FILES["image"]["tmp_name"]) && !empty($_FILES["image"]["tmp_name"])) {
-                $imageData = file_get_contents($_FILES["image"]["tmp_name"]);
-            } else {
-                $imageData = NULL;
-            }
-        
-            $resultado = $this->objContenedoresBasura->mmodifcontenedor($id, $nombre, $descripcion, $imageData);
-            
-            if ($resultado === true) {
-                header("Location: index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores");
-                exit();
-            } else {
-                $this->mensaje = $this->obtenerMensajeError($resultado);
+                    $nombre = ($nombre === '') ? NULL : $nombre;
+                    $descripcion = ($descripcion === '') ? NULL : $descripcion;
+
+                    // Verifica si se ha subido una img y si tiene contenido
+                    if (isset($_FILES["image"]["tmp_name"]) && !empty($_FILES["image"]["tmp_name"])) { //tmp_name: lo que hace crear un nombre temporal
+                        $imageData = file_get_contents($_FILES["image"]["tmp_name"]); //Leer el archivo y meterlo en una cadena de caracteres
+                    } else {
+                        $imageData = NULL;
+                    }
+                
+                    $resultado = $this->objContenedoresBasura->mmodifcontenedor($id, $nombre, $descripcion, $imageData);
+                    
+                    if ($resultado === true) {
+                        header("Location: index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores");
+                        exit();
+                    } else {
+                        $this->mensaje = $this->obtenerMensajeError($resultado);
+                    }
+                }
             }
         }
         
@@ -262,6 +271,10 @@ class CcontenedoresBasura {
             $archivotmp = $_FILES['dataCliente']['tmp_name'];
             $lineas     = file($archivotmp);
             $cantidad_registros_agregados = 0;
+
+            // if ($tipo !== 'text/csv') {
+            //     return $this->mensajeError = "ERROR. El archivo debe ser de tipo CSV.";
+            // }
 
             $i = 0;
 
