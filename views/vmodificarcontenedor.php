@@ -11,7 +11,7 @@
     <input type="file" name="image" id="image" accept="image/*">
 
     <label for="descripcion">Descripción del Contenedor:</label>
-    <textarea id="descripcion" name="descripcion" value="<?php echo $contenedor['descripcion'] ?>"></textarea>
+    <textarea id="descripcion" name="descripcion" ><?php echo $contenedor['descripcion'] ?></textarea>
     
     <input type="submit" value="Guardar">
 </form>

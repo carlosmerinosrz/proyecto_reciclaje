@@ -92,6 +92,10 @@ form label {
     margin-top: 10px;
 }
 
+.inputids{
+  background-color: #e4e3e3;
+}
+
 form input[type="text"],
 form textarea {
     width: 100%;

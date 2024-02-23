@@ -37,14 +37,14 @@ class CBasura {
         $nombre = ($nombre === '') ? NULL : $nombre;
         $descripcion = ($descripcion === '') ? NULL : $descripcion;
     
-            $resultado = $this->objBasura->agregarBasura($nombre, $descripcion, $id_contenedor);
-        
-            if($resultado === true){
-                 header("Location: index.php?controlador=cbasura&metodo=listadobasura");
-                 exit();
-            }else{
-                $this->obtenerMensajeError($resultado);
-            }
+        $resultado = $this->objBasura->agregarBasura($nombre, $descripcion, $id_contenedor);
+    
+        if($resultado === true){
+                header("Location: index.php?controlador=cbasura&metodo=listadobasura");
+                exit();
+        }else{
+            $this->obtenerMensajeError($resultado);
+        }
         
     }
 
@@ -100,6 +100,25 @@ class CBasura {
         return $datos;
     }
     
+    public function modificarBasura(){
+        $id_basura = $_POST['id'];
+        $nombre = $_POST['nombre'];
+        $descripcion = $_POST['descripcion'];
+        $id_contenedor = $_POST['id_contenedor'];
+
+        $nombre = ($nombre === '') ? NULL : $nombre;
+        $descripcion = ($descripcion === '') ? NULL : $descripcion;
+
+        $resultado = $this->objBasura->mmodificarBasura($id_basura, $nombre, $descripcion, $id_contenedor);
+    
+        if($resultado === true){
+            header("Location: index.php?controlador=cbasura&metodo=listadobasura");
+            exit();
+        }else{
+            $this->obtenerMensajeError($resultado);
+        }
+    }
+
     public function generarPdf() {
         $datos = $this->objBasura->listadoBasura();
         $this->generarVistaPdf($datos);

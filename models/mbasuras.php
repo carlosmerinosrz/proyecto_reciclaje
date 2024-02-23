@@ -22,22 +22,7 @@ class MBasura extends Conexion{
             return $numeroError;
         }
     }
-    
-    public function msacarcontenedores(){
-        $sql = "SELECT id_contenedor, nombre FROM contenedores";
-        $conexion = $this->conexion->prepare($sql);
-        $conexion->execute();
-        $datos = [];
-    
-        $result = $conexion->get_result();
-        while ($fila = $result->fetch_assoc()) {
-            $datos[] = $fila;
-        }
-        $conexion->close();
-    
-        return $datos;
-    }
-    
+
     public function listadoBasura() {
         $sql = "SELECT * FROM basura";
         $conexion = $this->conexion->prepare($sql);
@@ -63,11 +48,9 @@ class MBasura extends Conexion{
         return $resultado;
     }
     
-
-    public function msacarBasura($id_basura) {
-        $sql = "SELECT * FROM basura WHERE id_basura = ?";
+    public function msacarcontenedores(){
+        $sql = "SELECT id_contenedor, nombre FROM contenedores";
         $conexion = $this->conexion->prepare($sql);
-        $conexion->bind_param("i", $id_basura);
         $conexion->execute();
         $datos = [];
     
@@ -79,6 +62,44 @@ class MBasura extends Conexion{
     
         return $datos;
     }
+
+    public function msacarBasura($id_basura) {
+        $contenedores = $this->msacarcontenedores();
     
+        $sql = "SELECT b.id_basura, b.nombre AS nombre_basura, b.descripcion AS descripcion_basura, c.id_contenedor, c.nombre AS nombre_contenedor
+            FROM basura b LEFT JOIN contenedores c ON b.id_contenedor = c.id_contenedor
+            WHERE b.id_basura = ?;";
+        $conexion = $this->conexion->prepare($sql);
+        $conexion->bind_param("i", $id_basura);
+        $conexion->execute();
+        $datos = [];
+    
+        $result = $conexion->get_result();
+        while ($fila = $result->fetch_assoc()) {
+            // Agregamos la información de los contenedores al array de datos
+            $fila['contenedores'] = $contenedores;
+            $datos[] = $fila;
+        }
+        $conexion->close();
+    
+        return $datos;
+    }
+    
+    public function mmodificarBasura($id_basura, $nombre, $descripcion, $id_contenedor){
+        try{
+            $sql = "UPDATE basura SET nombre = ?, descripcion = ?, id_contenedor = ? WHERE id_basura = ?";
+            $conexion = $this->conexion->prepare($sql);
+            $conexion->bind_param("ssii", $nombre, $descripcion, $id_contenedor, $id_basura);
+            if ($conexion->execute()){
+                $conexion->close();
+                return true;
+            } else {
+                throw new Exception($conexion->error, $conexion->errno);
+            }
+        } catch (Exception $error) {
+            $numeroError = $error->getCode();
+            return $numeroError;
+        }
+    }
 }
 ?>
