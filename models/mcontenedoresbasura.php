@@ -51,12 +51,12 @@ class MContenedoresBasura extends Conexion{
     }
 
     public function mObtenerContenedorBasura($id) {
-        $sqlSelect = "SELECT contenedores.id_contenedor, contenedores.nombre AS nombre_contenedor, contenedores.img AS imagen_contenedor,
+        $sql = "SELECT contenedores.id_contenedor, contenedores.nombre AS nombre_contenedor, contenedores.img AS imagen_contenedor,
             contenedores.descripcion AS descripcion_contenedor,
             basura.id_basura, basura.nombre AS nombre_basura, basura.descripcion AS descripcion_basura FROM contenedores
             LEFT JOIN basura ON contenedores.id_contenedor = basura.id_contenedor
             WHERE contenedores.id_contenedor = ?";
-        $conexion2 = $this->conexion->prepare($sqlSelect);
+        $conexion2 = $this->conexion->prepare($sql);
         $conexion2->bind_param("i", $id);
         $conexion2->execute();
     
@@ -125,9 +125,9 @@ class MContenedoresBasura extends Conexion{
     public function crearBasurasNuevas($nombreBasura, $descripcionBasura, $idContenedor) {
         $sql = "INSERT INTO basura (nombre, descripcion, id_contenedor) VALUES (?, ?, ?)";
         $conexion = $this->conexion->prepare($sql);
-        $consulta->bind_param('ssi', $nombreBasura, $descripcionBasura, $idContenedor);
-        $resultado = $consulta->execute();
-        $consulta->close();
+        $conexion->bind_param('ssi', $nombreBasura, $descripcionBasura, $idContenedor);
+        $resultado = $conexion->execute();
+        $conexion->close();
         return $resultado;
     }
     
@@ -148,7 +148,6 @@ class MContenedoresBasura extends Conexion{
             $numeroError = $error->getCode();
             return $numeroError;
         }
-    }
-    
+    }   
 }
 ?>

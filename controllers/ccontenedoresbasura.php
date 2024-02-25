@@ -10,9 +10,11 @@ class CcontenedoresBasura {
 
         public function __construct() {
             require_once __DIR__ . '/../models/mcontenedoresbasura.php';
+            require_once __DIR__ . '/../models/mbasuras.php';
 
             $this->vista = 'vError';
             $this->objContenedoresBasura = new MContenedoresBasura();
+            $this->objBasura = new MBasura();
         }
 
         public function mostrarMenuInicial() {
@@ -104,26 +106,12 @@ class CcontenedoresBasura {
                         }
                     } catch (Exception $mensaje) {
                         $codigoError = $mensaje->getCode();
-                        switch ($codigoError) {
-                            case 1048:
-                                $this->mensaje = "Error al procesar el formulario: No puede haber campos vacíos.";
-                                break;
-                            case 1406:
-                                $this->mensaje = "Error al procesar el formulario: Los campos exceden la longitud máxima.";
-                                break;
-                            default:
-                                if (is_numeric($codigoError)) {
-                                    $this->mensaje = "Error al crear contenedor. Código de error: $codigoError";
-                                } else {
-                                    $this->mensaje = $codigoError;
-                                }
-                                break;
-                        }
+                        $this->obtenerMensajeError($codigoError);
                     }
                 }
             }
         }
-        
+        // ------BORRADO DE CONTENEDORES --------------------------------------------------------------
         public function borrarContenedores(){
             $this->vista = 'vborrado';
 
@@ -132,62 +120,79 @@ class CcontenedoresBasura {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (isset($_POST['confirmacion'])) {
                     $respuesta = $_POST['confirmacion'];
-            
                     if ($respuesta === 'si') {
                         $resultado = $this->objContenedoresBasura->mBorrarContenedor($id);
+                        $this->mensajebueno = "Se ha borrado correctamente el contenedor";
+                        $this->vista = 'vError';
+                        return;
+                        
+                    }else{
+                        header("Location: index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores");
+                        exit();
                     }
-                    header("Location: index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores");
-                    exit();
                 }
             }
         }
-
-        public function mObtenerContenedorBasura(){
+        // ------MODIFICAR LAS BASURAS QUE TIENE UN CONTENEDOR --------------------------------------------------------------
+        public function mModifBasurasContenedor(){
             $this->vista = 'informacioncontenedores';
             $id = $_GET['id'];
             $datosContenedor = $this->objContenedoresBasura->mObtenerContenedorBasura($id);
             return $datosContenedor;
         }
-
-        public function obtenerContenedorModf(){
+        // ------ OBTENER LOS DATOS DE LOS CONTENEDORES CON SUS BASURA --------------------------------------------------------------
+        public function mObtenerContenedorBasura(){
             $this->vista = 'vmodificarcontenedor';
             $id = $_GET['id'];
-            $datosContenedor = $this->objContenedoresBasura->mObtenerContenedor($id);
+            $datosContenedor = $this->objContenedoresBasura->mObtenerContenedorBasura($id);
             return $datosContenedor;
         }
-
-        public function cmodificarcontenedor(){
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                if(isset($_POST["nombre"]) && isset($_POST["descripcion"])){
-
-                    $nombre = $_POST["nombre"];
-                    $descripcion = $_POST["descripcion"];
-                    $id = $_GET['id'];
-
-                    $nombre = ($nombre === '') ? NULL : $nombre;
-                    $descripcion = ($descripcion === '') ? NULL : $descripcion;
-
-                    // Verifica si se ha subido una img y si tiene contenido
-                    if (isset($_FILES["image"]["tmp_name"]) && !empty($_FILES["image"]["tmp_name"])) { //tmp_name: lo que hace crear un nombre temporal
-                        $imageData = file_get_contents($_FILES["image"]["tmp_name"]); //Leer el archivo y meterlo en una cadena de caracteres
-                    } else {
-                        $imageData = NULL;
-                    }
+        // ------ MODIFICACION DE CONTENEDORES Y LAS BASURAS DEL CONTENEDOR --------------------------------------------------------------
+        public function cmodificarcontenedor() {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+             
+                $nombre = $_POST["nombre"];
+                $descripcion = $_POST["descripcion"];
+                $idContenedor = $_GET['id'];
+        
+                $nombre = ($nombre === '') ? NULL : $nombre;
+                $descripcion = ($descripcion === '') ? NULL : $descripcion;
+        
+                // Verifica si se ha subido una img y si tiene contenido
+                if (isset($_FILES["image"]["tmp_name"]) && !empty($_FILES["image"]["tmp_name"])) {
+                    // tmp_name: lo que hace crear un nombre temporal
+                    $imageData = file_get_contents($_FILES["image"]["tmp_name"]);
+                    // Leer el archivo y meterlo en una cadena de caracteres
+                } else {
+                    $imageData = NULL;
+                }
                 
-                    $resultado = $this->objContenedoresBasura->mmodifcontenedor($id, $nombre, $descripcion, $imageData);
-                    
-                    if ($resultado === true) {
-                        header("Location: index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores");
-                        exit();
-                    } else {
-                        $this->mensaje = $this->obtenerMensajeError($resultado);
+                $resultado1 = $this->objContenedoresBasura->mmodifcontenedor($idContenedor, $nombre, $descripcion, $imageData);
+        
+                foreach ($_POST as $devuelve => $nombreBasura) {
+                    if (strpos($devuelve, 'nombre_basura_') === 0) {
+                        
+                        $idBasura = substr($devuelve, strlen('nombre_basura_'));
+                        $descripcionDevuelve = 'descripcion_basura_' . $idBasura . '_' . $idContenedor;
+                        $descripcionBasura = isset($_POST[$descripcionDevuelve]) ? $_POST[$descripcionDevuelve] : '';
+
+                        $nombreBasura = ($nombreBasura === '') ? NULL : $nombreBasura;
+                        $descripcionBasura = ($descripcionBasura === '') ? NULL : $descripcionBasura;
+
+                        $resultado2 = $this->objBasura->mmodificarBasura($idBasura, $nombreBasura, $descripcionBasura, $idContenedor);
                     }
                 }
+                if($resultado1 === true && $resultado2 === true){
+                    $this->mensajebueno = 'Contenedor y basuras modificados exitosamente';
+                    return;
+                }else{
+                    $this->vista = 'vError';
+                    $this->obtenerMensajeError($resultado1);
+                }     
             }
         }
-        
+        // ------ MENSAJES DE ERROR --------------------------------------------------------------
         public function obtenerMensajeError($codigoError) {
-            $this->vista = 'vError'; 
             $this->mensaje = "Error. Código de error: " . $codigoError;
 
             switch ($codigoError) {
@@ -208,6 +213,7 @@ class CcontenedoresBasura {
             return $this->mensaje;
         }
 
+        // ------ BORRAR LAS BASURAS CUANDO MODIFICAMOS SOLO LAS BASURA DE LOS CONTENEDORES -------------------------------------
         public function borrarBasurasContenedores($id){
             return $this->objContenedoresBasura->borrarBasurasContenedores($id);
         }
@@ -231,9 +237,9 @@ class CcontenedoresBasura {
                     // Cogemos el id que esta despues de la cadena en este caso el id_basura
                     $idBasura = substr($devuelve, strlen('nombre_basura_'));
                     // Construimos el nombre del campo de descripción correspondiente
-                    $descripcionDevuelve = 'descripcion_basura_' . $idBasura . '_' . $idContenedor;
+                    $descripcionDevuelve = 'descripcion_basura_' . $idBasura;
                     // Verificamos si existe una descripción para esta basura
-                    $descripcion = isset($_POST[$descripcionDevuelve]) ? $_POST[$descripcionDevuelve] : '';
+                    $descripcion = isset($_POST[$descripcionDevuelve]) ? $_POST[$descripcionDevuelve] : NULL;
                     // Agregamos la nueva basura al array
                     $nuevasBasuras[] = array(
                         'nombre' => $nombre,
@@ -260,7 +266,7 @@ class CcontenedoresBasura {
                     $descripcion = ($descripcion === '') ? NULL : $descripcion;
                     $this->objContenedoresBasura->crearBasurasNuevas($nombre, $descripcion, $idContenedor);
                 }
-                $this->mensajebueno = "Se ha creado correctamente el contenedor con sus basuras";
+                $this->mensajebueno = "Se ha modificado correctamente las basuras de su contenedor";
                 return;
             }
         }

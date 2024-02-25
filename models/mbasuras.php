@@ -93,6 +93,7 @@ class MBasura extends Conexion{
             $sql = "UPDATE basura SET nombre = ?, descripcion = ?, id_contenedor = ? WHERE id_basura = ?";
             $conexion = $this->conexion->prepare($sql);
             $conexion->bind_param("ssii", $nombre, $descripcion, $id_contenedor, $id_basura);
+
             if ($conexion->execute()){
                 $conexion->close();
                 return true;

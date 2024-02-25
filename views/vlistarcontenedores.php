@@ -21,8 +21,8 @@
                         <td><?php echo ($contenedor['descripcion'] === NULL) ? 'Sin Descripcion' : $contenedor['descripcion']; ?></td>
                         <td>
                             <a class="aBorrar" href="index.php?controlador=ccontenedoresbasura&metodo=borrarContenedores&id=<?php echo $contenedor['id_contenedor']; ?>">Borrar</a>
-                            <a class="aEditar" href="index.php?controlador=ccontenedoresbasura&metodo=obtenerContenedorModf&id=<?php echo $contenedor['id_contenedor']; ?>">Editar</a>
-                            <a class="aModfBasura" href="index.php?controlador=ccontenedoresbasura&metodo=mObtenerContenedorBasura&id=<?php echo $contenedor['id_contenedor']; ?>">Modf Basuras</a>
+                            <a class="aEditar" href="index.php?controlador=ccontenedoresbasura&metodo=mObtenerContenedorBasura&id=<?php echo $contenedor['id_contenedor']; ?>">Editar</a>
+                            <a class="aModfBasura" href="index.php?controlador=ccontenedoresbasura&metodo=mModifBasurasContenedor&id=<?php echo $contenedor['id_contenedor']; ?>">Modf Basuras</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

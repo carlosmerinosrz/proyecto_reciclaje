@@ -40,8 +40,8 @@ class CBasura {
         $resultado = $this->objBasura->agregarBasura($nombre, $descripcion, $id_contenedor);
     
         if($resultado === true){
-                // header("Location: index.php?controlador=cbasura&metodo=listadobasura");
-                // exit();
+                header("Location: index.php?controlador=cbasura&metodo=listadobasura");
+                exit();
         }else{
             $this->obtenerMensajeError($resultado);
         }
