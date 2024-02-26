@@ -15,9 +15,23 @@ class CBasura {
         $this->objBasura = new MBasura();
     }
 
+    public function eleccionGestion() {
+        $this->vista = 'vgestionbasura';
+        $datos = $this->objBasura->msacarcontenedores();
+        return $datos;
+    }
+
     public function listadoBasura() {
         $this->vista = 'vlistarbasura';
         $datos = $this->objBasura->listadoBasura();
+        return $datos;
+    }
+
+    public function listadoBasuraContenedor() {
+        $this->vista = 'vlistarbasura';
+        $id_contenedor = $_POST['id_contenedor'];
+        print_r($id_contenedor);
+        $datos = $this->objBasura->listadoBasuraContenedor($id_contenedor);
         return $datos;
     }
 

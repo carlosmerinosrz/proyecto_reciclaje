@@ -38,3 +38,6 @@ foreach ($datos as $basura):
             <button type="submit" class="enviarFormulario">Enviar Formulario</button>
         </form>
     </div>
+<div id="contenedorNegro">
+    <a href="index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores" class="volverAlListado">VOLVER AL LISTADO</a>
+</div>

@@ -122,7 +122,7 @@ class CcontenedoresBasura {
                     $respuesta = $_POST['confirmacion'];
                     if ($respuesta === 'si') {
                         $resultado = $this->objContenedoresBasura->mBorrarContenedor($id);
-                        $this->mensajebueno = "Se ha borrado correctamente el contenedor";
+                        $this->mensajebueno = "Se ha borrado correctamente el contenedor. Las basuras del contenedor puedes asignarlas a otros contenedores desde la Gestion de Basura.";
                         $this->vista = 'vError';
                         return;
                         

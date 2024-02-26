@@ -19,7 +19,7 @@
                     <a href="index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores">G. Contenedores</a>
                 </li>
                 <li>
-                    <a href="index.php?controlador=cbasura&metodo=listadoBasura">G. Basura</a>
+                    <a href="index.php?controlador=cbasura&metodo=eleccionGestion">G. Basura</a>
                 </li>
             </ul>
             <div class="hamburger">
@@ -34,7 +34,7 @@
                     <a href="index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores">G. Contenedores</a>
                 </li>
                 <li>
-                    <a href="index.php?controlador=cbasura&metodo=listadoBasura">G. Basura</a>
+                    <a href="index.php?controlador=cbasura&metodo=eleccionGestion">G. Basura</a>
                 </li>
             </ul>
         </div>

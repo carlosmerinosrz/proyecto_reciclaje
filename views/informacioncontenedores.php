@@ -39,13 +39,41 @@ foreach ($datos as $basura):
             </div>
         </div>  
 <?php endforeach; ?>
+<div id="nuevosCampos"></div>
             <button type="submit" class="enviarFormulario">Enviar Formulario</button>
         </form>
     </div>
+</div>
 
-    <script>
-        function borrarDiv(elemento) {
-            var divDinamico = elemento.parentNode;
-            divDinamico.parentNode.removeChild(divDinamico);
-        }
-    </script>
+<div id="contenedorNegro">
+    <a href="index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores" class="volverAlListado">VOLVER AL LISTADO</a>
+    <button type="button" id="agregarBasuraBtn">Agregar Basura</button>
+</div>
+
+<script>
+    function borrarDiv(elemento) {
+        var divDinamico = elemento.parentNode;
+        divDinamico.parentNode.removeChild(divDinamico);
+    }
+
+    document.getElementById('agregarBasuraBtn').addEventListener('click', function () {
+        var nuevosCampos = document.getElementById('nuevosCampos');
+        var nuevoDivBasuras = document.createElement('div');
+        nuevoDivBasuras.className = 'divDinamicoBasuras';
+
+        nuevoDivBasuras.innerHTML = `
+            <div class="divBasuras">
+                <label for="nombre_basura_${Date.now()}">Nombre de la Basura:</label>
+                <input type="text" id="nombre_basura_${Date.now()}" name="nombre_basura_${Date.now()}" value="">
+
+                <label for="descripcion_basura_${Date.now()}">Descripción de la Basura:</label>
+                <input type="text" id="descripcion_basura_${Date.now()}" name="descripcion_basura_${Date.now()}" value="">
+            </div>
+            <div class="btnBorradoBasuras">
+                <button type="button" class="borrarBasura" onclick="borrarDiv(this.parentNode)">Borrar</button>
+            </div>
+        `;
+
+        nuevosCampos.appendChild(nuevoDivBasuras);
+    });
+</script>

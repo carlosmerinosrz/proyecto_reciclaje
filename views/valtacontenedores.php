@@ -31,3 +31,7 @@
     <!-- Botón de envío -->
     <input type="submit" value="Guardar">
 </form>
+<div id="contenedorNegro">
+    <a href="index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores" class="volverAlListado">VOLVER AL LISTADO</a>
+</div>
+

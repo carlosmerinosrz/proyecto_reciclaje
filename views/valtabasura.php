@@ -17,7 +17,7 @@
     
     <label for="id_contenedor">Contenedor de la Basura:</label>
     <select id="id_contenedor" name="id_contenedor">
-        <option value='NULL'>Sin contenedor</option>
+        <option value='NULL'>Punto Limpio</option>
         <?php foreach ($datos as $contenedor): ?>
             <option value="<?php echo $contenedor['id_contenedor']; ?>"><?php echo $contenedor['nombre']; ?></option>
             

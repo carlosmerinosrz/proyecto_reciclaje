@@ -9,7 +9,13 @@ class MBasura extends Conexion{
 
     public function agregarBasura($nombreBasura, $descripcionBasura,$id_contenedor) {
         try {
-            $conexion = $this->conexion->prepare("INSERT INTO basura (nombre, descripcion, id_contenedor) VALUES (?, ?, ?)");
+            print_r($id_contenedor);
+            if ($id_contenedor === 'NULL'){
+                $sql = "INSERT INTO basura (nombre, descripcion, id_contenedor) VALUES (?, ?, null)";
+            }else{
+                $sql = "INSERT INTO basura (nombre, descripcion, id_contenedor) VALUES (?, ?, ?)";
+            }
+            $conexion = $this->conexion->prepare($sql);
             $conexion->bind_param('ssi', $nombreBasura, $descripcionBasura, $id_contenedor);
 
             print_r($nombreBasura);
@@ -28,6 +34,27 @@ class MBasura extends Conexion{
 
     public function listadoBasura() {
         $sql = "SELECT * FROM basura";
+        $conexion = $this->conexion->prepare($sql);
+        $conexion->execute();
+        $datos = [];
+    
+        $result = $conexion->get_result();
+        while ($fila = $result->fetch_assoc()) {
+            $datos[] = $fila;
+        }
+        $conexion->close();
+    
+        return $datos;
+    }
+
+    public function listadoBasuraContenedor($id_contenedor) {
+        print_r($id_contenedor);
+        if ($id_contenedor === 'NULL'){
+            $sql = "SELECT * FROM basura WHERE id_contenedor is null";
+        }else{
+            $sql = "SELECT * FROM basura WHERE id_contenedor = $id_contenedor";
+        }
+        
         $conexion = $this->conexion->prepare($sql);
         $conexion->execute();
         $datos = [];
@@ -90,7 +117,12 @@ class MBasura extends Conexion{
     
     public function mmodificarBasura($id_basura, $nombre, $descripcion, $id_contenedor){
         try{
-            $sql = "UPDATE basura SET nombre = ?, descripcion = ?, id_contenedor = ? WHERE id_basura = ?";
+            if ($id_contenedor === 'NULL'){
+                $sql = "UPDATE basura SET nombre = ?, descripcion = ?, id_contenedor is null WHERE id_basura = ?";
+            }else{
+                $sql = "UPDATE basura SET nombre = ?, descripcion = ?, id_contenedor = ? WHERE id_basura = ?";
+            }
+            
             $conexion = $this->conexion->prepare($sql);
             $conexion->bind_param("ssii", $nombre, $descripcion, $id_contenedor, $id_basura);
 
