@@ -9,7 +9,23 @@ body {
   font-family: "utendo";
   background-image: url("../image/fondo.png");
 }
+#menuinicial{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+.opcionesMenu{
+  margin-top: 20px;
+}
 
+.opcionesMenu img{
+  display: block;
+  margin: auto;
+  width: 70%;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 3px;
+}
 /* ------------------------------MENU------------------------------ */
 nav {
   padding: 5px 5%;
