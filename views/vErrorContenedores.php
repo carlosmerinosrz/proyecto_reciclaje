@@ -6,5 +6,5 @@
             echo '<div class="bueno-message">¡' . $mensajeBueno . '!</div>';
         }
         ?>
-    <a href="index.php?controlador=cbasura&metodo=listadoBasuraContenedor&id_contenedor=".$id_contenedor class="volverAlListado">VOLVER AL LISTADO</a>
+    <a href="index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores" class="volverAlListado">VOLVER AL LISTADO</a>
 </div>

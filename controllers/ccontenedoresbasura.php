@@ -12,7 +12,7 @@ class CcontenedoresBasura {
             require_once __DIR__ . '/../models/mcontenedoresbasura.php';
             require_once __DIR__ . '/../models/mbasuras.php';
 
-            $this->vista = 'vError';
+            $this->vista = 'vErrorContenedores';
             $this->objContenedoresBasura = new MContenedoresBasura();
             $this->objBasura = new MBasura();
         }
@@ -59,11 +59,19 @@ class CcontenedoresBasura {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if(isset($_POST["nombre"]) && isset($_POST["descripcionContenedor"])) {
                     if (isset($_FILES["image"]["tmp_name"]) && !empty($_FILES["image"]["tmp_name"])) {
+                        $tipoImagen = exif_imagetype($_FILES["image"]["tmp_name"]);
+                    
+                        if ($tipoImagen !== IMAGETYPE_JPEG) {
+                            $this->mensaje = "Error al procesar el formulario: Debes seleccionar una imagen con formato JPG o JPEG.";
+                            return;
+                        }
+                    
                         $imageData = file_get_contents($_FILES["image"]["tmp_name"]);
                     } else {
                         $this->mensaje = "Error al procesar el formulario: Debes seleccionar una imagen.";
                         return;
                     }
+                    
 
                     $nombre = $_POST["nombre"];
                     $nombre = ($nombre === '') ? NULL : $nombre;
@@ -123,7 +131,7 @@ class CcontenedoresBasura {
                     if ($respuesta === 'si') {
                         $resultado = $this->objContenedoresBasura->mBorrarContenedor($id);
                         $this->mensajebueno = "Se ha borrado correctamente el contenedor. Las basuras del contenedor puedes asignarlas a otros contenedores desde la Gestion de Basura.";
-                        $this->vista = 'vError';
+                        $this->vista = 'vErrorContenedores';
                         return;
                         
                     }else{
@@ -161,6 +169,12 @@ class CcontenedoresBasura {
                 // Verifica si se ha subido una img y si tiene contenido
                 if (isset($_FILES["image"]["tmp_name"]) && !empty($_FILES["image"]["tmp_name"])) {
                     // tmp_name: lo que hace crear un nombre temporal
+                    $tipoImagen = exif_imagetype($_FILES["image"]["tmp_name"]);
+                    
+                        if ($tipoImagen !== IMAGETYPE_JPEG) {
+                            $this->mensaje = "Error al procesar el formulario: Debes seleccionar una imagen con formato JPG o JPEG.";
+                            return;
+                        }
                     $imageData = file_get_contents($_FILES["image"]["tmp_name"]);
                     // Leer el archivo y meterlo en una cadena de caracteres
                 } else {
@@ -173,20 +187,18 @@ class CcontenedoresBasura {
                     if (strpos($devuelve, 'nombre_basura_') === 0) {
                         
                         $idBasura = substr($devuelve, strlen('nombre_basura_'));
-                        $descripcionDevuelve = 'descripcion_basura_' . $idBasura . '_' . $idContenedor;
-                        $descripcionBasura = isset($_POST[$descripcionDevuelve]) ? $_POST[$descripcionDevuelve] : '';
+                        $descripcionDevuelve = 'descripcion_basura_' . $idBasura;
+                        $descripcionDevuelve = isset($_POST[$descripcionDevuelve]) ? $_POST[$descripcionDevuelve] : NULL;
 
                         $nombreBasura = ($nombreBasura === '') ? NULL : $nombreBasura;
-                        $descripcionBasura = ($descripcionBasura === '') ? NULL : $descripcionBasura;
-
-                        $resultado2 = $this->objBasura->mmodificarBasura($idBasura, $nombreBasura, $descripcionBasura, $idContenedor);
+                        $resultado2 = $this->objBasura->mmodificarBasura($idBasura, $nombreBasura, $descripcionDevuelve, $idContenedor);
                     }
                 }
                 if($resultado1 === true && $resultado2 === true){
                     $this->mensajebueno = 'Contenedor y basuras modificados exitosamente';
                     return;
                 }else{
-                    $this->vista = 'vError';
+                    $this->vista = 'vErrorContenedores';
                     $this->obtenerMensajeError($resultado1);
                 }     
             }
@@ -202,6 +214,9 @@ class CcontenedoresBasura {
                 case 1406:
                     $this->mensaje = "Error al procesar el formulario: Los campos exceden la longitud máxima.";
                     break;
+                case 1062:
+                    $this->mensaje = "Error al procesar el formulario: Ya existe un contenedor con ese nombre.";
+                    break;    
                 default:
                     if (is_numeric($codigoError)) {
                         $this->mensaje = "Error al crear contenedor. Código de error: $codigoError";
@@ -250,7 +265,7 @@ class CcontenedoresBasura {
             }
             // Si hay campos de nombre de basura en blanco, no hacemos ninguna operación
             if ($camposVacios) {
-                $this->vista = 'vError';
+                $this->vista = 'vErrorContenedores';
                 $this->mensaje = "Error no puede haber ningun Nombre en blanco, si deseas eliminar una basura pulsa la cruz";
                 return;
             }

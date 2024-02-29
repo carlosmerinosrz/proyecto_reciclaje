@@ -9,17 +9,20 @@ class MBasura extends Conexion{
 
     public function agregarBasura($nombreBasura, $descripcionBasura,$id_contenedor) {
         try {
-            print_r($id_contenedor);
-            if ($id_contenedor === 'NULL'){
+            if ($id_contenedor === 'NULL') {
                 $sql = "INSERT INTO basura (nombre, descripcion, id_contenedor) VALUES (?, ?, null)";
-            }else{
+            } else {
                 $sql = "INSERT INTO basura (nombre, descripcion, id_contenedor) VALUES (?, ?, ?)";
             }
             $conexion = $this->conexion->prepare($sql);
-            $conexion->bind_param('ssi', $nombreBasura, $descripcionBasura, $id_contenedor);
+            
+            if ($id_contenedor === 'NULL') {
+                $conexion->bind_param('ss', $nombreBasura, $descripcionBasura);
+            } else {
+                $conexion->bind_param('ssi', $nombreBasura, $descripcionBasura, $id_contenedor);
+            }
+            
 
-            print_r($nombreBasura);
-            print_r($id_contenedor);
             if ($conexion->execute()){
                 $conexion->close();
                 return true;
@@ -30,6 +33,17 @@ class MBasura extends Conexion{
             $numeroError = $error->getCode();
             return $numeroError;
         }
+    }
+
+    public function borrarBasurasSeleccionadas($basurasSeleccionadas) {
+        print_r('BASURAS SELECCIONADAS: ');
+        var_dump($basurasSeleccionadas);
+        $basuras = implode(',', array_fill(0, count($basurasSeleccionadas), '?'));
+
+        $sql = "DELETE FROM basura WHERE id_basura IN ($basuras)";
+        $conexion = $this->conexion->prepare($sql);
+        if($conexion->execute($basurasSeleccionadas))
+            return true;
     }
 
     public function listadoBasura() {
@@ -48,11 +62,14 @@ class MBasura extends Conexion{
     }
 
     public function listadoBasuraContenedor($id_contenedor) {
-        print_r($id_contenedor);
         if ($id_contenedor === 'NULL'){
-            $sql = "SELECT * FROM basura WHERE id_contenedor is null";
+            $sql = "SELECT b.id_basura, b.nombre AS nombre_basura, b.descripcion AS descripcion_basura, c.id_contenedor, c.nombre AS nombre_contenedor
+            FROM basura b LEFT JOIN contenedores c ON b.id_contenedor = c.id_contenedor
+            WHERE c.id_contenedor IS NULL;";
         }else{
-            $sql = "SELECT * FROM basura WHERE id_contenedor = $id_contenedor";
+            $sql = "SELECT b.id_basura, b.nombre AS nombre_basura, b.descripcion AS descripcion_basura, c.id_contenedor, c.nombre AS nombre_contenedor
+            FROM basura b LEFT JOIN contenedores c ON b.id_contenedor = c.id_contenedor
+            WHERE c.id_contenedor = $id_contenedor;";
         }
         
         $conexion = $this->conexion->prepare($sql);

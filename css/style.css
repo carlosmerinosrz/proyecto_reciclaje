@@ -172,6 +172,8 @@ form img {
   border-radius: 4px;
 }
 
+
+
 /* ------------------------------------------------------------------------------------------ */
 
 /* -------------------------LISTADO DE CONTENEDORES------------------------- */
@@ -264,6 +266,22 @@ form img {
   max-height: 100px;
 }
 
+.informativo, .seleccion{
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #cbc780;
+  background-color: #fbffb68f; /* Color verde */
+  border-radius: 3px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.seleccion{
+  background-color: #cbc780;
+  color: white;
+}
+
+
 /* Estilo para el enlace Generar PDF */
 .enlacesPdf, .enlacesAlta, .enlacesCsv{
   display: inline-block;
@@ -279,6 +297,10 @@ form img {
 }
 .enlacesCsv{
   background-color: #b87c5c; /* Color verde */
+}
+
+#tablaContenedores input[type="checkbox"] {
+  margin-right: 5px; /* Espacio a la derecha del checkbox */
 }
 
 /* --------------------------------------------------------------------------- */

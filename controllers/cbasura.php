@@ -29,8 +29,17 @@ class CBasura {
 
     public function listadoBasuraContenedor() {
         $this->vista = 'vlistarbasura';
+        $id_contenedor = $_GET['id_contenedor'];
+        if($id_contenedor === ''){
+            $id_contenedor = 'NULL';
+		}
+        $datos = $this->objBasura->listadoBasuraContenedor($id_contenedor);
+        return $datos;
+    }
+
+    public function listadoBasuraContenedorFormulario() {
+        $this->vista = 'vlistarbasura';
         $id_contenedor = $_POST['id_contenedor'];
-        print_r($id_contenedor);
         $datos = $this->objBasura->listadoBasuraContenedor($id_contenedor);
         return $datos;
     }
@@ -54,15 +63,15 @@ class CBasura {
         $resultado = $this->objBasura->agregarBasura($nombre, $descripcion, $id_contenedor);
     
         if($resultado === true){
-                header("Location: index.php?controlador=cbasura&metodo=listadobasura");
-                exit();
+            header("Location: index.php?controlador=cbasura&metodo=listadoBasuraContenedor&id_contenedor=".$id_contenedor);
+            exit();
         }else{
-            $this->obtenerMensajeError($resultado);
+            $this->obtenerMensajeError($resultado, $id_contenedor);
         }
         
     }
 
-    public function obtenerMensajeError($codigoError) {
+    public function obtenerMensajeError($codigoError, $id_contenedor) {
         $this->vista = 'vError'; 
         $this->mensaje = "Error. Código de error: " . $codigoError;
 
@@ -73,6 +82,9 @@ class CBasura {
             case 1406:
                 $this->mensaje = "Error al procesar el formulario: Los campos exceden la longitud máxima.";
                 break;
+            case 1062:
+                $this->mensaje = "Error al procesar el formulario: Ya existe una basura con ese nombre.";
+                break;  
             default:
                 if (is_numeric($codigoError)) {
                     $this->mensaje = "Error al crear contenedor. Código de error: $codigoError";
@@ -92,15 +104,17 @@ class CBasura {
     
     public function borrarbasura(){
         $id = $_GET['id'];
+        $id_contenedor = $_GET['id_contenedor'];
         $this->vista = 'vborrado';
     
         if (isset($_POST['confirmacion'])) {
             $respuesta = $_POST['confirmacion'];
     
             if ($respuesta === 'si') {
-                $resultado = $this->objBasura->mBorrarBasura($id);
+                $this->objBasura->mBorrarBasura($id);
             }
-            header("Location: index.php?controlador=cbasura&metodo=listadobasura");
+            
+            header("Location: index.php?controlador=cbasura&metodo=listadoBasuraContenedor&id_contenedor=".$id_contenedor);
             exit();
         }
     }
@@ -126,10 +140,30 @@ class CBasura {
         $resultado = $this->objBasura->mmodificarBasura($id_basura, $nombre, $descripcion, $id_contenedor);
     
         if($resultado === true){
-            header("Location: index.php?controlador=cbasura&metodo=listadobasura");
+            header("Location: index.php?controlador=cbasura&metodo=listadoBasuraContenedor&id_contenedor=".$id_contenedor);
             exit();
         }else{
             $this->obtenerMensajeError($resultado);
+        }
+    }
+
+    public function borrarBasurasSeleccionadas() {
+        // $this->vista = 'vborrado';
+        $id_contenedor = $_GET['id_contenedor'];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $basurasSeleccionadas = isset($_POST['seleccionar']) ? $_POST['seleccionar'] : [];
+            if($basurasSeleccionadas !== []){
+                $this->objBasura->borrarBasurasSeleccionadas($basurasSeleccionadas);
+                header("Location: index.php?controlador=cbasura&metodo=listadoBasuraContenedor&id_contenedor=".$id_contenedor);
+                exit();
+            }   
+            else{
+                $this->vista = 'vError';
+                $this->mensaje = "Por favor, selecciona al menos una basura.";
+            }
+        
+            
         }
     }
 

@@ -15,6 +15,9 @@ CREATE TABLE contenedores (
     descripcion VARCHAR(255) NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+ALTER TABLE contenedores
+ADD CONSTRAINT nombre_unico UNIQUE (nombre);
+
 -- Crear tabla basura
 CREATE TABLE basura (
     id_basura INT PRIMARY KEY AUTOINCREMENT,
@@ -23,3 +26,6 @@ CREATE TABLE basura (
     id_contenedor  TINYINT NULL,
     FOREIGN KEY (id_contenedor) REFERENCES contenedores (id_contenedor) ON DELETE SET NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+ALTER TABLE basura
+ADD CONSTRAINT nombre_unico UNIQUE (nombre);
