@@ -13,8 +13,6 @@
     $datos = $objControlador->$metodo(); //Sacar los datos que devuelve los controladores
     $mensajeError = $objControlador->mensaje;
     $mensajeBueno = $objControlador->mensajebueno;
-    $ultimaPalabra1 = $objControlador->palabra1;
-    $ultimaPalabra2 = $objControlador->palabra2;
 
     //Existen dos vistas html o php
     $vistasHtlm = __DIR__ . '/views/' . $objControlador->vista . '.html';

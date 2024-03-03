@@ -1,5 +1,5 @@
 <?php
-require_once 'librerias/dompdf/vendor/autoload.php';
+require_once '../librerias/dompdf/vendor/autoload.php';
 use Dompdf\Dompdf;
 
 class CBasura {

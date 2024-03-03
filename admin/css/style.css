@@ -1,0 +1,484 @@
+@font-face {
+  font-family: "utendo";
+  src: url("Utendo-Bold.ttf") format("truetype");
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "utendo";
+  background-image: url("../../image/fondo.png");
+}
+#menuinicial{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+.opcionesMenu{
+  margin-top: 20px;
+}
+
+.opcionesMenu img{
+  display: block;
+  margin: auto;
+  width: 70%;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 3px;
+}
+/* ------------------------------MENU------------------------------ */
+nav {
+  padding: 5px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  background-color: white;
+}
+nav .logo {
+  display: flex;
+  align-items: center;
+}
+nav .logo img {
+  height: 25px;
+  width: auto;
+  margin-right: 10px;
+}
+nav .logo h1 {
+  font-size: 1.1rem;
+  color: rgb(0, 123, 27);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+nav ul li {
+  margin-left: 1.5rem;
+}
+nav ul li a {
+  text-decoration: none;
+  color: #000;
+  font-size: 95%;
+  font-weight: 400;
+  padding: 4px 8px;
+  border-radius: 5px;
+}
+
+nav ul li a:hover {
+  background-color: #f5f5f5;
+}
+.hamburger {
+  display: none;
+  cursor: pointer;
+  background-image: url("../image/hamburguer.png");
+  background-size: cover;
+  width: 25px;
+  height: 25px;
+}
+
+.menubar {
+  position: absolute;
+  top: 0;
+  left: -60%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 60%;
+  height: 100vh;
+  padding: 20% 0;
+  background: rgba(255, 255, 255);
+  transition: all 0.5s ease-in;
+  z-index: 2;
+}
+
+/* ------------------------------------------------------------------------------------------ */
+/* ------------------------------FORMULARIOS------------------------------ */
+form {
+    width: 60%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.inputids{
+  background-color: #e4e3e3;
+}
+
+form input[type="text"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form input[type="file"] {
+    margin-bottom: 10px;
+}
+
+form h2 {
+    margin-top: 20px;
+    font-size: 1.5em;
+}
+
+form input[type="text"]:nth-child(odd),
+form textarea:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+form input[type="submit"] {
+    background-color: #5cb85c;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: 'utendo';
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: 'utendo';
+  text-align: center;
+}
+
+input{
+  width: 100%;
+  padding: 10px;
+}
+
+form img {
+  display: block;
+  margin: auto;
+  width: 200px;
+  height: auto;
+  border-radius: 4px;
+}
+
+
+
+/* ------------------------------------------------------------------------------------------ */
+
+/* -------------------------LISTADO DE CONTENEDORES------------------------- */
+/* Contenedor principal */
+#listarContenedores {
+  width: 80%;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para la tabla de contenedores */
+#tablaContenedores {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#tablaContenedores th, #tablaContenedores td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#tablaContenedores th {
+  background-color: #f2f2f2;
+}
+
+/* Estilo para las filas de la tabla */
+#tablaContenedores tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Estilo para enlaces de acción (Editar, Borrar, etc.) */
+.aBorrar, .aEditar, .aModfBasura {
+  display: inline-block;
+  padding: 5px 10px;
+  margin-right: 5px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #d9534f; /* Color rojo */
+  border-radius: 3px;
+}
+
+.aEditar {
+  background-color: #5bc0de; /* Color azul */
+}
+.aModfBasura{
+  background-color: #deca5b;
+}
+
+#tablaContenedores_length{
+  display: none;
+}
+
+/* Estilo para la paginación */
+#paginacion {
+  margin-top: 20px;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  padding : 10px;
+  margin-left: 0px;
+  display: inline;
+  cursor:pointer;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  color: #555;
+}
+.dataTables_paginate {
+  display: flex;
+  justify-content: end;
+}
+.paginate_button{
+  text-decoration: underline;
+}
+
+/* Estilo para la imagen de añadir */
+#listarContenedores a img {
+  width: 50px;
+  height: 50px;
+  margin-top: 20px;
+  display: block;
+}
+
+/* Estilo para las imágenes de los contenedores */
+.imagenesContenedor {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.informativo, .seleccion{
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #cbc780;
+  background-color: #fbffb68f; /* Color verde */
+  border-radius: 3px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.seleccion{
+  background-color: #cbc780;
+  color: white;
+}
+
+
+/* Estilo para el enlace Generar PDF */
+.enlacesPdf, .enlacesAlta, .enlacesCsv{
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #5cb85c; /* Color verde */
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+.enlacesPdf{
+  background-color: #5cb8af; /* Color verde */
+}
+.enlacesCsv{
+  background-color: #b87c5c; /* Color verde */
+}
+
+#tablaContenedores input[type="checkbox"] {
+  margin-right: 5px; /* Espacio a la derecha del checkbox */
+}
+
+/* --------------------------------------------------------------------------- */
+
+/* ------------------------------ CONFIRMACION DE BORRADO ------------------------------*/
+
+.alert-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.confirmation-buttons {
+  margin-top: 20px;
+}
+
+.button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.button-yes, .button-no{
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.button-yes {
+  background-color: #5cb85c;
+
+}
+
+.button-no {
+  background-color: #e74c3c;
+  
+}
+
+/* ------------------------------------------------------------------------------------------ */
+/* -------------------- MODIFICADO DE LAS BASURAS A TRAVES DE LOS CONTENEDORES----------------- */
+
+/* Estilo para el contenedor de información del contenedor y basuras */
+#informacionContenedor {
+  width: 80%;
+  margin: 20px auto;
+  background-color: #ffffffa9;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para la sección de información del contenedor */
+#infCont {
+  text-align: center;
+}
+
+#infCont img {
+  max-width: 100%;
+  max-height: 200px;
+  margin-bottom: 10px;
+}
+
+.nombreContBasu {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#descripCont {
+  margin-bottom: 20px;
+}
+
+/* Estilo para las basuras */
+.divDinamicoBasuras {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.divBasuras {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.divBasuras label, .divBasuras input {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Estilo para los botones de borrar basura */
+.btnBorradoBasuras button {
+  background-color: #d9534f; /* Color rojo */
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Estilo para el botón de enviar formulario */
+.enviarFormulario {
+  background-color: #5cb85c; /* Color verde */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* ------------------------------------------------------------------ */
+
+.error-message, .bueno-message{
+  margin: auto;
+  display: flex;
+  width: 40%;
+  height: 80px;
+  justify-content: center;
+  align-items: center;
+  color: #fff; 
+  border-radius: 10px;
+  box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
+  padding: 10px;
+  text-align: center;
+}
+
+.error-message {
+  background-color: rgba(255, 0, 0, 0.476);
+}
+.bueno-message {
+  background-color: rgba(9, 139, 27, 0.476);
+}
+
+.volverAlListado{
+  margin: 20px;
+  background-color: #7f5cb8; /* Color verde */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+}
+#agregarBasuraBtn{
+  margin: 20px;
+  background-color: #3194fc; /* Color verde */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+#contenedorNegro{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 790px) {
+  .hamburger {
+    display: block;
+  }
+
+  .menu-active {
+    background-image: url("../image/close.png");
+  }
+
+  nav ul {
+    display: none;
+  }
+
+  .active {
+    left: 0;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
+}

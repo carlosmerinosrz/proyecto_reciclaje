@@ -7,21 +7,19 @@
 </head>
     <body>
         <nav>
+            <div class="logo">
+                <img src="../image/icon_reciclaje.png">
+                <h1>RECICLA TU BASURA</h1>
+            </div>
             <ul>
                 <li>
                     <a href="index.php?">Inicio</a>
                 </li>
                 <li>
-                    <a href="index.php?">Sobre el reciclaje</a>
+                    <a href="index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores">G. Contenedores</a>
                 </li>
                 <li>
-                    <a href="index.php?controlador=creciclaje&metodo=eleccionGestion">Seleccion</a>
-                </li>
-                <li>
-                    <form action="index.php?controlador=creciclaje&metodo=buscadorBasuras" method="POST">
-                            <input type="text" id="busqueda" name="busqueda" placeholder="Busca tu basura">
-                            <button type="submit">Buscar</button>
-                    </form>
+                    <a href="index.php?controlador=cbasura&metodo=eleccionGestion">G. Basura</a>
                 </li>
             </ul>
             <div class="hamburger">
@@ -33,10 +31,10 @@
                     <a href="index.php?">Inicio</a>
                 </li>
                 <li>
-                    <a href="index.php?">Sobre el Reciclaje</a>
+                    <a href="index.php?controlador=ccontenedoresbasura&metodo=listadoContenedores">G. Contenedores</a>
                 </li>
                 <li>
-                    <a href="index.php?">Seleccion</a>
+                    <a href="index.php?controlador=cbasura&metodo=eleccionGestion">G. Basura</a>
                 </li>
             </ul>
         </div>

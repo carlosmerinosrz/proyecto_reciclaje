@@ -49,4 +49,10 @@
 <!-- Agrega las bibliotecas de jQuery y DataTables -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-
+<script>
+    $(document).ready(function () {
+  $('#tablaContenedores').DataTable({
+      "pageLength": 5
+  });
+});
+</script>

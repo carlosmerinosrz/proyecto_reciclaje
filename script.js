@@ -33,7 +33,7 @@ $(document).ready(function () {
       "ordering": true,
       "info": true,
       "searching": true,
-      "pageLength": 10
+      "pageLength": 5
   });
 });
 

@@ -9,5 +9,4 @@ define('BBDD', 'user2daw_BD1-09');
 // define('CONTRASENIA', '');
 // define('BBDD', 'preciclaje');
 
-
 ?>
