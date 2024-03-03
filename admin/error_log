@@ -1,0 +1,21 @@
+[03-Mar-2024 17:32:19 UTC] PHP Warning:  POST Content-Length of 11420022 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[03-Mar-2024 17:32:46 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function exif_imagetype() in /home/user2daw/public_html/09/PROYECTO_RECICLAJE/admin/controllers/ccontenedoresbasura.php:62
+Stack trace:
+#0 /home/user2daw/public_html/09/PROYECTO_RECICLAJE/admin/index.php(13): CcontenedoresBasura->procesarFormulario()
+#1 {main}
+  thrown in /home/user2daw/public_html/09/PROYECTO_RECICLAJE/admin/controllers/ccontenedoresbasura.php on line 62
+[03-Mar-2024 17:33:36 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function exif_imagetype() in /home/user2daw/public_html/09/PROYECTO_RECICLAJE/admin/controllers/ccontenedoresbasura.php:62
+Stack trace:
+#0 /home/user2daw/public_html/09/PROYECTO_RECICLAJE/admin/index.php(13): CcontenedoresBasura->procesarFormulario()
+#1 {main}
+  thrown in /home/user2daw/public_html/09/PROYECTO_RECICLAJE/admin/controllers/ccontenedoresbasura.php on line 62
+[03-Mar-2024 17:34:51 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function exif_imagetype() in /home/user2daw/public_html/09/PROYECTO_RECICLAJE/admin/controllers/ccontenedoresbasura.php:62
+Stack trace:
+#0 /home/user2daw/public_html/09/PROYECTO_RECICLAJE/admin/index.php(13): CcontenedoresBasura->procesarFormulario()
+#1 {main}
+  thrown in /home/user2daw/public_html/09/PROYECTO_RECICLAJE/admin/controllers/ccontenedoresbasura.php on line 62
+[03-Mar-2024 17:34:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function exif_imagetype() in /home/user2daw/public_html/09/PROYECTO_RECICLAJE/admin/controllers/ccontenedoresbasura.php:62
+Stack trace:
+#0 /home/user2daw/public_html/09/PROYECTO_RECICLAJE/admin/index.php(13): CcontenedoresBasura->procesarFormulario()
+#1 {main}
+  thrown in /home/user2daw/public_html/09/PROYECTO_RECICLAJE/admin/controllers/ccontenedoresbasura.php on line 62

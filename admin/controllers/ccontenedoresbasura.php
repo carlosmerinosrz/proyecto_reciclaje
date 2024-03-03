@@ -59,18 +59,34 @@ class CcontenedoresBasura {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if(isset($_POST["nombre"]) && isset($_POST["descripcionContenedor"])) {
                     if (isset($_FILES["image"]["tmp_name"]) && !empty($_FILES["image"]["tmp_name"])) {
-                        $tipoImagen = exif_imagetype($_FILES["image"]["tmp_name"]);
+                        $imageInfo = getimagesize($_FILES["image"]["tmp_name"]);
+                        
+                        if ($imageInfo === false) {
+                            $this->mensaje = "Error al procesar el formulario: No se pudo obtener la información de la imagen.";
+                            return;
+                        }
+                        
+                        $mime = $imageInfo['mime']; //Con esto verificamos el contenido mime de una imagen
+                        // $tipoImagen = exif_imagetype($_FILES["image"]["tmp_name"]);
                     
-                        if ($tipoImagen !== IMAGETYPE_JPEG) {
+                        // if ($tipoImagen !== IMAGETYPE_JPEG) {
+                        //     $this->mensaje = "Error al procesar el formulario: Debes seleccionar una imagen con formato JPG o JPEG.";
+                        //     return;
+                        // }
+
+                        // Podríamos hacerlo asi, que es mas sencillo, pero la extension exif_imagetype, no está activada en el hopsting
+                        
+                        if ($mime !== 'image/jpeg') {
                             $this->mensaje = "Error al procesar el formulario: Debes seleccionar una imagen con formato JPG o JPEG.";
                             return;
                         }
-                    
+                        
                         $imageData = file_get_contents($_FILES["image"]["tmp_name"]);
                     } else {
                         $this->mensaje = "Error al procesar el formulario: Debes seleccionar una imagen.";
                         return;
                     }
+                    
                     
 
                     $nombre = $_POST["nombre"];

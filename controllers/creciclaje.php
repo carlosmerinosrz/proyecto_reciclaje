@@ -17,6 +17,9 @@ class CReciclaje {
     public function mostrarMenuInicial(){
         $this->vista = 'vmenu';
     }
+    public function sobrereciclaje(){
+        $this->vista = 'sobrereciclaje';
+    }
 
     public function eleccionGestion() {
         $this->vista = 'vseleccionarcontenedor';
@@ -39,21 +42,17 @@ class CReciclaje {
         
             // Obtén las últimas dos palabras buscadas desde las cookies
             $ultimaPalabra1 = isset($_COOKIE['ultimaPalabra1']) ? $_COOKIE['ultimaPalabra1'] : '';
+            $this->palabra1 = $ultimaPalabra1;
             $ultimaPalabra2 = isset($_COOKIE['ultimaPalabra2']) ? $_COOKIE['ultimaPalabra2'] : '';
+            $this->palabra2 = $ultimaPalabra2;
         
             // Establece las cookies para las últimas dos palabras buscadas
             setcookie('ultimaPalabra2', $ultimaPalabra1, time() + 3600, '/');
             setcookie('ultimaPalabra1', $palabraBusqueda, time() + 3600, '/');
-        }
-        
-        // Obtén las últimas dos palabras buscadas desde las cookies
-        $ultimaPalabra1 = isset($_COOKIE['ultimaPalabra1']) ? $_COOKIE['ultimaPalabra1'] : '';
-        $this->palabra1 = $ultimaPalabra1;
-        $ultimaPalabra2 = isset($_COOKIE['ultimaPalabra2']) ? $_COOKIE['ultimaPalabra2'] : '';
-        $this->palabra2 = $ultimaPalabra2;
 
-        $datos = $this->objReciclaje->mObtenerResultadoBuscador($palabraBusqueda);
-        return $datos;
+            $datos = $this->objReciclaje->mObtenerResultadoBuscador($palabraBusqueda);
+            return $datos;
+        }
     }
 
 }

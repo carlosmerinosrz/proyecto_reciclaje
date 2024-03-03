@@ -12,7 +12,7 @@
                     <a href="index.php?">Inicio</a>
                 </li>
                 <li>
-                    <a href="index.php?">Sobre el reciclaje</a>
+                    <a href="index.php?controlador=creciclaje&metodo=sobrereciclaje">Sobre el reciclaje</a>
                 </li>
                 <li>
                     <a href="index.php?controlador=creciclaje&metodo=eleccionGestion">Seleccion</a>
